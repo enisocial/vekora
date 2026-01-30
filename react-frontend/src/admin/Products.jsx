@@ -25,10 +25,8 @@ const Products = ({ token }) => {
 
   const loadData = async () => {
     try {
-      // Ajouter un timestamp pour éviter le cache
-      const timestamp = Date.now();
       const [productsData, categoriesData] = await Promise.all([
-        fetch(`/api/products?t=${timestamp}`).then(res => res.json()),
+        ApiService.getProducts(),
         ApiService.getCategories()
       ]);
       

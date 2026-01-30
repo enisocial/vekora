@@ -11,6 +11,7 @@ const Catalog = () => {
   const [error, setError] = useState(null);
   const [heroVideo, setHeroVideo] = useState(null);
   const [videoMuted, setVideoMuted] = useState(true);
+  const [whatsappConfig, setWhatsappConfig] = useState(null);
   const videoRef = useRef(null);
 
   const toggleVideoSound = async () => {
@@ -39,6 +40,7 @@ const Catalog = () => {
   useEffect(() => {
     loadData();
     loadHeroVideo();
+    loadWhatsAppConfig();
   }, []);
 
   // Effet pour gérer le replay automatique toutes les 30 secondes
@@ -81,6 +83,15 @@ const Catalog = () => {
       }
     } catch (err) {
       console.error('Erreur lors du chargement de la vidéo hero:', err);
+    }
+  };
+
+  const loadWhatsAppConfig = async () => {
+    try {
+      const config = await ApiService.getWhatsAppConfig();
+      setWhatsappConfig(config);
+    } catch (err) {
+      console.error('Erreur lors du chargement de la config WhatsApp:', err);
     }
   };
 
@@ -215,6 +226,19 @@ const Catalog = () => {
           )}
         </div>
       </div>
+
+      {/* Bouton WhatsApp flottant */}
+      {whatsappConfig && whatsappConfig.phone && (
+        <a
+          href={`https://wa.me/${whatsappConfig.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(whatsappConfig.message || 'Bonjour, je suis intéressé par vos produits')}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="whatsapp-float"
+          title="Contactez-nous sur WhatsApp"
+        >
+          <i className="fab fa-whatsapp"></i>
+        </a>
+      )}
     </div>
   );
 };
