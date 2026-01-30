@@ -289,10 +289,22 @@ const Products = ({ token }) => {
                 <textarea
                   id="description"
                   name="description"
-                  rows="3"
+                  rows="8"
+                  maxLength="2000"
+                  placeholder="Décrivez votre produit en détail..."
                   value={formData.description}
                   onChange={handleInputChange}
+                  style={{
+                    resize: 'vertical',
+                    minHeight: '120px',
+                    fontFamily: 'inherit',
+                    fontSize: '14px',
+                    lineHeight: '1.5'
+                  }}
                 ></textarea>
+                <small style={{color: '#666', fontSize: '12px'}}>
+                  {formData.description.length}/2000 caractères
+                </small>
               </div>
 
               <div className="form-group">
