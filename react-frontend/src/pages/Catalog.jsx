@@ -58,9 +58,8 @@ const Catalog = () => {
   const loadData = async () => {
     try {
       setLoading(true);
-      const timestamp = Date.now();
       const [productsData, categoriesData] = await Promise.all([
-        fetch(`/api/products?t=${timestamp}`).then(res => res.json()),
+        ApiService.getProducts(),
         ApiService.getCategories()
       ]);
       
@@ -76,12 +75,9 @@ const Catalog = () => {
 
   const loadHeroVideo = async () => {
     try {
-      const response = await fetch('/api/hero-video');
-      if (response.ok) {
-        const data = await response.json();
-        if (data.success && data.video_url) {
-          setHeroVideo(data.video_url);
-        }
+      const data = await ApiService.getHeroVideo();
+      if (data.success && data.video_url) {
+        setHeroVideo(data.video_url);
       }
     } catch (err) {
       console.error('Erreur lors du chargement de la vidéo hero:', err);

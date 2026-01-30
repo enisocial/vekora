@@ -16,10 +16,17 @@ PORT=5000
 
 3. Redéployer le projet
 
-## Frontend 
+## Frontend - IMPORTANT!
 
-Les variables sont déjà configurées dans .env.production
+**Aller aussi sur le projet frontend sur Vercel et ajouter :**
+
+```
+VITE_API_URL=https://vekora-b5w4.vercel.app/api
+```
+
+Puis redéployer le frontend.
 
 ## Test après configuration
 
 Tester l'API : https://vekora-b5w4.vercel.app/api/products
+Tester le site : https://vekora-f8qv-ayyzxhg7a-tivi-ms-projects.vercel.app
