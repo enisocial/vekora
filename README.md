@@ -1,4 +1,4 @@
-# 🍕 DeliverShop - Boutique en Ligne
+# vekora - Boutique en Ligne
 
 Une boutique en ligne complète avec interface client et panel d'administration sécurisé, construite avec Node.js, Express et Supabase.
 
