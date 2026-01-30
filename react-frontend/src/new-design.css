@@ -4324,3 +4324,62 @@ body {
     font-size: 0.75rem;
   }
 }
+/* Categories mobile improvements */
+@media (max-width: 768px) {
+  .category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 15px 10px;
+    height: auto;
+    min-height: 180px;
+  }
+  
+  .category-card .category-image {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+  
+  .category-card h3 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0;
+    padding: 0 5px;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    max-width: 100%;
+    color: #2c3e50;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-card {
+    padding: 12px 8px;
+    min-height: 160px;
+  }
+  
+  .category-card .category-image {
+    height: 100px;
+    margin-bottom: 10px;
+  }
+  
+  .category-card h3 {
+    font-size: 0.8rem;
+    line-height: 1.1;
+    padding: 0 3px;
+  }
+}
+
+@media (max-width: 360px) {
+  .category-card h3 {
+    font-size: 0.75rem;
+    line-height: 1.0;
+  }
+}
