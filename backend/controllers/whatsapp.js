@@ -13,7 +13,11 @@ const getWhatsAppConfig = async (req, res) => {
     }
 
     // Si pas de config, retourner des valeurs par défaut
-    const config = data || {
+    const config = data ? {
+      phone: data.phone_number || data.phone || '',
+      message: data.message_template || data.message || 'Bonjour, je suis intéressé par vos produits',
+      is_active: data.is_active || false
+    } : {
       phone: '',
       message: 'Bonjour, je suis intéressé par vos produits',
       is_active: false

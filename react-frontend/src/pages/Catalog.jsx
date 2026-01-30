@@ -228,7 +228,7 @@ const Catalog = () => {
       </div>
 
       {/* Bouton WhatsApp flottant */}
-      {whatsappConfig && whatsappConfig.phone && (
+      {whatsappConfig && whatsappConfig.phone && whatsappConfig.is_active && (
         <a
           href={`https://wa.me/${whatsappConfig.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(whatsappConfig.message || 'Bonjour, je suis intéressé par vos produits')}`}
           target="_blank"
