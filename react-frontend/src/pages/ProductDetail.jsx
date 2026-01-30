@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import ApiService from '../api/api';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { addToCart } = useCart();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -54,23 +56,8 @@ const ProductDetail = () => {
       });
   };
 
-  const addToCart = () => {
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const existingItem = cart.find(item => item.id === product.id);
-    
-    if (existingItem) {
-      existingItem.quantity += 1;
-    } else {
-      cart.push({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        image_url: product.image_url,
-        quantity: 1
-      });
-    }
-    
-    localStorage.setItem('cart', JSON.stringify(cart));
+  const handleAddToCart = () => {
+    addToCart(product);
     alert('Produit ajouté au panier !');
   };
 
@@ -161,7 +148,7 @@ const ProductDetail = () => {
             )}
 
             <div className="product-actions">
-              <button onClick={addToCart} className="btn btn-primary btn-large">
+              <button onClick={handleAddToCart} className="btn btn-primary btn-large">
                 <i className="fas fa-shopping-cart"></i>
                 Ajouter au panier
               </button>
