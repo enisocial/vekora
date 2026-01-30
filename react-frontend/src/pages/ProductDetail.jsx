@@ -37,13 +37,21 @@ const ProductDetail = () => {
 
   const formatDescription = (description) => {
     if (!description) return '';
+    
+    // Diviser par paragraphes et traiter chaque ligne
     return description
       .split('\n')
-      .map((line, index) => (
-        <p key={index} style={{ margin: '0 0 12px 0', lineHeight: '1.6' }}>
-          {line}
-        </p>
-      ));
+      .map((line, index) => {
+        const trimmedLine = line.trim();
+        if (trimmedLine === '') {
+          return <br key={index} />;
+        }
+        return (
+          <p key={index}>
+            {trimmedLine}
+          </p>
+        );
+      });
   };
 
   const addToCart = () => {
