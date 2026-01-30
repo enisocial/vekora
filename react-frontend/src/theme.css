@@ -1,0 +1,61 @@
+/* Design Orange/Noir/Blanc - DeliverShop */
+body {
+  background: linear-gradient(135deg, #ff6b35 0%, #000000 100%) !important;
+  min-height: 100vh !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.app {
+  background: linear-gradient(135deg, #ff6b35 0%, #000000 100%) !important;
+  min-height: 100vh !important;
+}
+
+.catalog-page {
+  background: linear-gradient(135deg, #ff6b35 0%, #000000 100%) !important;
+  min-height: 100vh !important;
+}
+
+.navbar {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid rgba(255, 107, 53, 0.3) !important;
+}
+
+.nav-brand {
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.cart-link {
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%) !important;
+  color: white !important;
+}
+
+.hero-section {
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%) !important;
+}
+
+.categories-section {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+.product-card {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 107, 53, 0.2) !important;
+}
+
+.product-price {
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.add-to-cart-btn {
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%) !important;
+  color: white !important;
+}
