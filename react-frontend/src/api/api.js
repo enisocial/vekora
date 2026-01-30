@@ -1,8 +1,13 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
+console.log('API_BASE_URL:', API_BASE_URL);
+console.log('Environment:', import.meta.env.MODE);
+
 class ApiService {
   static async request(endpoint, options = {}) {
     const url = `${API_BASE_URL}${endpoint}`;
+    console.log('Making request to:', url);
+    
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -13,15 +18,19 @@ class ApiService {
 
     try {
       const response = await fetch(url, config);
-      const data = await response.json();
+      console.log('Response status:', response.status);
       
       if (!response.ok) {
-        throw new Error(data.error || `HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.error('API Error Response:', errorText);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
       
+      const data = await response.json();
       return data;
     } catch (error) {
       console.error('API Error:', error);
+      console.error('Request URL:', url);
       throw error;
     }
   }

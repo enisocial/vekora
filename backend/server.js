@@ -23,7 +23,7 @@ app.use(helmet({
 // CORS configuration
 app.use(cors({
   origin: process.env.NODE_ENV === 'production'
-    ? [process.env.FRONTEND_URL, 'https://vekora.vercel.app', 'https://vekora-admin.vercel.app']
+    ? ['https://vekora-f8qv-ayyzxhg7a-tivi-ms-projects.vercel.app', 'https://vekora.vercel.app', 'https://vekora-b5w4.vercel.app']
     : ['http://localhost:3000', 'http://localhost:3001'],
   credentials: true
 }));
