@@ -1,6 +1,6 @@
 {
-  "name": "delivershop-react",
-  "private": true,
+  "name": "vekora-react",
+  "description": "Vekora - Le marché du futur. Marketplace multi-produits moderne et sécurisée.",
   "version": "0.0.0",
   "type": "module",
   "scripts": {

@@ -1,7 +1,7 @@
 {
-  "name": "delivershop-backend",
+  "name": "vekora-backend",
   "version": "1.0.0",
-  "description": "Backend API for DeliverShop e-commerce platform",
+  "description": "Backend API for Vekora - Le marché du futur",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -9,12 +9,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
+    "vekora",
+    "marketplace",
     "ecommerce",
     "api",
     "express",
     "supabase"
   ],
-  "author": "",
+  "author": "Vekora Team",
   "license": "ISC",
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0",

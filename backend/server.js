@@ -89,7 +89,7 @@ app.use((err, req, res, next) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`🚀 DeliverShop API server running on port ${PORT}`);
+  console.log('🚀 Vekora API server running on port ${PORT}');
   console.log(`📊 Health check: http://localhost:${PORT}/health`);
   console.log(`🛒 Products API: http://localhost:${PORT}/api/products`);
   console.log(`📂 Categories API: http://localhost:${PORT}/api/categories`);
