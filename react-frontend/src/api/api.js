@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://vekora-b5w4.vercel.app/api';
+const API_BASE_URL = 'https://vekora-b5w4.vercel.app/api';
 
 console.log('API_BASE_URL:', API_BASE_URL);
 console.log('Environment:', import.meta.env.MODE);
