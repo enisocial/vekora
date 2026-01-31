@@ -23,7 +23,7 @@ app.use(helmet({
 // CORS configuration
 app.use(cors({
   origin: process.env.NODE_ENV === 'production'
-    ? ['https://vekora-f8qv-ayyzxhg7a-tivi-ms-projects.vercel.app', 'https://vekora.vercel.app', 'https://vekora-b5w4.vercel.app', 'https://vekora.netlify.app', 'https://vekora-pngm4cloq-tivi-ms-projects.vercel.app']
+    ? ['https://vekora-f8qv-ayyzxhg7a-tivi-ms-projects.vercel.app', 'https://vekora.vercel.app', 'https://vekora-b5w4.vercel.app', 'https://vekora.netlify.app', 'https://vekora-pngm4cloq-tivi-ms-projects.vercel.app', 'https://vekora.store']
     : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:4173'],
   credentials: true
 }));
