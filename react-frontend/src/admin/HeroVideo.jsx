@@ -18,14 +18,9 @@ const HeroVideo = ({ token }) => {
 
   const loadHeroVideo = async () => {
     try {
-      const response = await fetch('/api/hero-video');
-      if (response.ok) {
-        const data = await response.json();
-        if (data.success && data.video_url) {
-          setHeroVideo({ video_url: data.video_url });
-        } else {
-          setHeroVideo(null);
-        }
+      const data = await ApiService.getHeroVideo();
+      if (data.success && data.video_url) {
+        setHeroVideo({ video_url: data.video_url });
       } else {
         setHeroVideo(null);
       }
@@ -77,22 +72,13 @@ const HeroVideo = ({ token }) => {
     e.preventDefault();
     
     try {
-      const response = await fetch('/api/hero-video', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ video_url: formData.video_url })
-      });
-      
-      if (!response.ok) {
-        throw new Error('Erreur lors de la mise à jour');
-      }
+      const data = await ApiService.setHeroVideo({ video_url: formData.video_url }, token);
       
       await loadHeroVideo();
       setFormData({ title: '', video_url: '' });
       alert('Vidéo mise à jour !');
     } catch (error) {
+      console.error('Submit error:', error);
       alert('Erreur: ' + error.message);
     }
   };
@@ -100,17 +86,11 @@ const HeroVideo = ({ token }) => {
   const handleDelete = async () => {
     if (confirm('Supprimer la vidéo de la page d\'accueil ?')) {
       try {
-        const response = await fetch('/api/hero-video', {
-          method: 'DELETE'
-        });
-        
-        if (!response.ok) {
-          throw new Error('Erreur lors de la suppression');
-        }
-        
+        await ApiService.deleteHeroVideo(token);
         await loadHeroVideo();
         alert('Vidéo supprimée !');
       } catch (error) {
+        console.error('Delete error:', error);
         alert('Erreur: ' + error.message);
       }
     }
