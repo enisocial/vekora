@@ -4495,12 +4495,14 @@ body {
 /* Featured Products Section */
 .featured-section {
   margin: 60px 0;
-  padding: 40px 0;
-  background: linear-gradient(135deg, rgba(255, 107, 53, 0.05) 0%, rgba(247, 147, 30, 0.05) 100%);
+  padding: 50px 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(20px);
   border-radius: 24px;
-  border: 1px solid rgba(255, 107, 53, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
 
 .featured-section::before {
@@ -4522,18 +4524,16 @@ body {
 .section-header h2 {
   font-size: 2.5rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #ff6b35, #f7931e);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: white;
   margin-bottom: 10px;
-  text-shadow: 0 4px 8px rgba(255, 107, 53, 0.2);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .section-header p {
   font-size: 1.1rem;
-  color: #666;
+  color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .featured-products-grid {
@@ -4547,17 +4547,21 @@ body {
 .suggestions-section {
   margin: 80px 0 60px 0;
   padding: 50px 0;
-  background: rgba(248, 249, 250, 0.8);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
   border-radius: 24px;
   border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
 }
 
 .suggestions-section .section-header h2 {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #2c3e50;
+  text-shadow: none;
+}
+
+.suggestions-section .section-header p {
+  color: #666;
+  text-shadow: none;
 }
 
 .suggestions-grid {
@@ -4571,12 +4575,16 @@ body {
 .featured-section .product-card {
   transform: scale(1);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 0 8px 30px rgba(255, 107, 53, 0.15);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
 }
 
 .featured-section .product-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 50px rgba(255, 107, 53, 0.25);
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* Mobile responsive */
