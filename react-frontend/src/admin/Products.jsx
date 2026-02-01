@@ -124,10 +124,12 @@ const Products = ({ token }) => {
         name: formData.name.trim(),
         description: formData.description ? formData.description.trim() : '',
         price: parseFloat(formData.price),
+        promotional_price: formData.promotional_price ? parseFloat(formData.promotional_price) : null,
         category_id: formData.category_id || null,
         image_url: formData.image_url || null,
         video_url: formData.video_url || null,
-        additional_images: formData.additional_images || []
+        additional_images: formData.additional_images || [],
+        is_featured: formData.is_featured || false
       };
       
       console.log('Sending product data:', JSON.stringify(productData, null, 2));
@@ -154,10 +156,12 @@ const Products = ({ token }) => {
       name: product.name,
       description: product.description || '',
       price: product.price.toString(),
+      promotional_price: product.promotional_price ? product.promotional_price.toString() : '',
       category_id: product.category_id || '',
       image_url: product.image_url || '',
       video_url: product.video_url || '',
-      additional_images: additionalImages
+      additional_images: additionalImages,
+      is_featured: product.is_featured || false
     });
     setShowForm(true);
   };
@@ -182,10 +186,12 @@ const Products = ({ token }) => {
       name: '',
       description: '',
       price: '',
+      promotional_price: '',
       category_id: '',
       image_url: '',
       video_url: '',
-      additional_images: []
+      additional_images: [],
+      is_featured: false
     });
     setEditingProduct(null);
     setShowForm(false);

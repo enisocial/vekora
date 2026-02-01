@@ -39,7 +39,7 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <Link to={`/product/${product.id}`} className="product-card">
+    <Link to={`/product/${product.id}`} className={`product-card ${product.is_featured ? 'featured' : ''}`}>
       <div className="product-image">
         <img 
           src={product.image_url || '/placeholder.jpg'} 
@@ -59,7 +59,6 @@ const ProductCard = ({ product }) => {
         <p className="product-description">{product.description}</p>
         <div className="product-footer">
           <div className="product-price">{formatPrice(product.price, product.promotional_price)}</div>
-          {product.is_featured && <span className="featured-badge">Nouveau</span>}
           <button 
             className={`btn btn-primary add-to-cart-btn ${isAdding ? 'adding' : ''}`}
             onClick={handleAddToCart}
