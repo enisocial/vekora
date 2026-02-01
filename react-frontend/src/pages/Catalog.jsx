@@ -12,6 +12,8 @@ const Catalog = () => {
   const [heroVideo, setHeroVideo] = useState(null);
   const [videoMuted, setVideoMuted] = useState(true);
   const [whatsappConfig, setWhatsappConfig] = useState(null);
+  const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [suggestedProducts, setSuggestedProducts] = useState([]);
   const videoRef = useRef(null);
 
   const toggleVideoSound = async () => {
@@ -65,8 +67,16 @@ const Catalog = () => {
         ApiService.getCategories()
       ]);
       
-      setProducts(productsData.data || productsData || []);
+      const allProducts = productsData.data || productsData || [];
+      setProducts(allProducts);
       setCategories(categoriesData.data || categoriesData || []);
+      
+      // Séparer les produits vedettes
+      const featured = allProducts.filter(p => p.is_featured).slice(0, 4);
+      const suggested = allProducts.filter(p => !p.is_featured).slice(0, 6);
+      
+      setFeaturedProducts(featured);
+      setSuggestedProducts(suggested);
     } catch (err) {
       setError('Erreur lors du chargement des produits');
       console.error(err);
@@ -170,6 +180,21 @@ const Catalog = () => {
       </div>
 
       <div className="container">
+        {/* Section Produits Vedettes */}
+        {featuredProducts.length > 0 && (
+          <div className="featured-section">
+            <div className="section-header">
+              <h2>🎆 Nos Nouveautés</h2>
+              <p>Découvrez nos derniers produits sélectionnés pour vous</p>
+            </div>
+            <div className="featured-products-grid">
+              {featuredProducts.map(product => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Section Catégories */}
         {categories.length > 0 && (
           <div className="categories-section">
@@ -225,6 +250,21 @@ const Catalog = () => {
             </div>
           )}
         </div>
+
+        {/* Section Suggestions */}
+        {!selectedCategory && suggestedProducts.length > 0 && (
+          <div className="suggestions-section">
+            <div className="section-header">
+              <h2>💡 Vous pourriez aussi aimer</h2>
+              <p>Sélection intelligente basée sur vos intérêts</p>
+            </div>
+            <div className="suggestions-grid">
+              {suggestedProducts.map(product => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Bouton WhatsApp flottant */}
