@@ -19,12 +19,23 @@ const ProductCard = ({ product }) => {
     }, 600);
   };
 
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat('fr-FR', {
+  const formatPrice = (price, promotionalPrice) => {
+    const formatter = new Intl.NumberFormat('fr-FR', {
       style: 'currency',
       currency: 'XAF',
       minimumFractionDigits: 0
-    }).format(price).replace('XAF', 'FCFA');
+    });
+    
+    if (promotionalPrice && promotionalPrice < price) {
+      return (
+        <div className="price-container">
+          <span className="original-price">{formatter.format(price).replace('XAF', 'FCFA')}</span>
+          <span className="promotional-price">{formatter.format(promotionalPrice).replace('XAF', 'FCFA')}</span>
+        </div>
+      );
+    }
+    
+    return formatter.format(price).replace('XAF', 'FCFA');
   };
 
   return (
@@ -47,7 +58,8 @@ const ProductCard = ({ product }) => {
         <h3 className="product-name">{product.name}</h3>
         <p className="product-description">{product.description}</p>
         <div className="product-footer">
-          <span className="product-price">{formatPrice(product.price)}</span>
+          <div className="product-price">{formatPrice(product.price, product.promotional_price)}</div>
+          {product.is_featured && <span className="featured-badge">Nouveau</span>}
           <button 
             className={`btn btn-primary add-to-cart-btn ${isAdding ? 'adding' : ''}`}
             onClick={handleAddToCart}

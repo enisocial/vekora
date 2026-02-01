@@ -77,9 +77,11 @@ const createProduct = async (req, res) => {
       name: hasValidData ? req.body.name.trim() : 'Nom par défaut',
       description: req.body.description || '',
       price: req.body.price ? parseFloat(req.body.price) : 99.99,
+      promotional_price: req.body.promotional_price ? parseFloat(req.body.promotional_price) : null,
       category_id: req.body.category_id || null,
       image_url: req.body.image_url || null,
-      video_url: req.body.video_url || null
+      video_url: req.body.video_url || null,
+      is_featured: req.body.is_featured || false
     };
     
     console.log('Final product data:', productData);
@@ -130,15 +132,17 @@ const updateProduct = async (req, res) => {
     console.log('Request body:', req.body);
     
     const { id } = req.params;
-    const { name, description, price, category_id, image_url, video_url } = req.body;
+    const { name, description, price, promotional_price, category_id, image_url, video_url, is_featured } = req.body;
 
     const updateData = {
       name,
       description,
       price,
+      promotional_price,
       category_id,
       image_url,
-      video_url
+      video_url,
+      is_featured
     };
 
     console.log('Update data:', updateData);

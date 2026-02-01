@@ -4427,3 +4427,52 @@ body {
     margin-bottom: 0 !important;
   }
 }
+/* Featured products and promotional prices */
+.price-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.original-price {
+  font-size: 0.8rem;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.promotional-price {
+  font-size: 0.9rem;
+  color: #ff6b35;
+  font-weight: 700;
+}
+
+.featured-badge {
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+}
+
+.product-card {
+  position: relative;
+}
+
+.product-card.featured::before {
+  content: '⭐ NOUVEAU';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+}

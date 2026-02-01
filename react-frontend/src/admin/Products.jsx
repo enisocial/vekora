@@ -13,10 +13,12 @@ const Products = ({ token }) => {
     name: '',
     description: '',
     price: '',
+    promotional_price: '',
     category_id: '',
     image_url: '',
     video_url: '',
-    additional_images: []
+    additional_images: [],
+    is_featured: false
   });
 
   useEffect(() => {
@@ -241,18 +243,6 @@ const Products = ({ token }) => {
             <form onSubmit={handleSubmit} className="product-form">
               <div className="form-row">
                 <div className="form-group">
-                  <label htmlFor="name">Nom du produit *</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                
-                <div className="form-group">
                   <label htmlFor="price">Prix *</label>
                   <input
                     type="number"
@@ -265,10 +255,47 @@ const Products = ({ token }) => {
                     required
                   />
                 </div>
+                
+                <div className="form-group">
+                  <label htmlFor="promotional_price">Prix promotionnel</label>
+                  <input
+                    type="number"
+                    id="promotional_price"
+                    name="promotional_price"
+                    step="0.01"
+                    min="0"
+                    value={formData.promotional_price}
+                    onChange={handleInputChange}
+                    placeholder="Laisser vide si pas de promotion"
+                  />
+                </div>
               </div>
 
               <div className="form-group">
-                <label htmlFor="category_id">Catégorie</label>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="is_featured"
+                    checked={formData.is_featured}
+                    onChange={(e) => setFormData({...formData, is_featured: e.target.checked})}
+                  />
+                  Mettre en avant (produit vedette)
+                </label>
+              </div>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="name">Nom du produit *</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+              </div>
                 <select
                   id="category_id"
                   name="category_id"
