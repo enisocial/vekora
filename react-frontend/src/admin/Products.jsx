@@ -296,6 +296,9 @@ const Products = ({ token }) => {
                   />
                 </div>
               </div>
+
+              <div className="form-group">
+                <label htmlFor="category_id">Catégorie</label>
                 <select
                   id="category_id"
                   name="category_id"
