@@ -167,8 +167,8 @@ const ProductDetail = () => {
 
             <div className="product-features">
               <div className="feature-item">
-                <i className="fas fa-shipping-fast"></i>
-                <span>Livraison 24-48h</span>
+                <i className="fas fa-hammer"></i>
+                <span>Fabrication artisanale</span>
               </div>
               <div className="feature-item">
                 <i className="fas fa-shield-alt"></i>
@@ -191,9 +191,9 @@ const ProductDetail = () => {
 
             <div className="delivery-info">
               <h4><i className="fas fa-truck"></i> Informations de livraison</h4>
-              <p>• Livraison rapide sous 24-48h dans toute la région</p>
+              <p>• Livraison sous 7 à 14 jours après validation de l'acompte</p>
               <p>• Frais de livraison calculés selon votre localisation</p>
-              <p>• Possibilité de retrait en magasin</p>
+              <p>• Possibilité de retrait à l'atelier</p>
             </div>
 
             <div className="product-actions">
