@@ -67,7 +67,7 @@ const Dashboard = ({ token, onLogout }) => {
       setLoading(true);
       
       // Reset products
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/products/reset`, {
+      const response = await fetch(`https://vekora-b5w4.vercel.app/products/reset`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -80,7 +80,7 @@ const Dashboard = ({ token, onLogout }) => {
       }
       
       // Reset orders
-      const ordersResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/orders/reset`, {
+      const ordersResponse = await fetch(`https://vekora-b5w4.vercel.app/orders/reset`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
