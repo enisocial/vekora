@@ -40,6 +40,13 @@ const Catalog = () => {
   };
 
   useEffect(() => {
+    // SEO: Mettre à jour le titre et la description de la page
+    document.title = 'Vekora - Meubles & Mobiliers sur Mesure | Précommande Artisanale';
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Découvrez notre collection de meubles et mobiliers artisanaux sur mesure. Précommandez vos meubles de qualité, fabrication après validation, livraison 7-14 jours.');
+    }
+    
     loadData();
     loadHeroVideo();
     loadWhatsAppConfig();

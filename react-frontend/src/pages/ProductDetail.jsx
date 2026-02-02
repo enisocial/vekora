@@ -19,6 +19,26 @@ const ProductDetail = () => {
     loadWhatsAppConfig();
   }, [id]);
 
+  // SEO: Mettre à jour les meta tags quand le produit est chargé
+  useEffect(() => {
+    if (product) {
+      document.title = `${product.name} - Vekora | Meuble sur Mesure`;
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) {
+        metaDescription.setAttribute('content', `${product.name} - ${product.description?.substring(0, 150) || 'Meuble artisanal sur mesure'} | Précommande chez Vekora`);
+      }
+      
+      // Open Graph
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      const ogDescription = document.querySelector('meta[property="og:description"]');
+      const ogImage = document.querySelector('meta[property="og:image"]');
+      
+      if (ogTitle) ogTitle.setAttribute('content', `${product.name} - Vekora`);
+      if (ogDescription) ogDescription.setAttribute('content', product.description?.substring(0, 150) || 'Meuble artisanal sur mesure');
+      if (ogImage && product.image_url) ogImage.setAttribute('content', product.image_url);
+    }
+  }, [product]);
+
   // Auto-défilement des images
   useEffect(() => {
     if (product && images.length > 1) {
