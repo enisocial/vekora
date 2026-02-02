@@ -5,7 +5,8 @@ const {
   createOrder,
   getOrders,
   getOrder,
-  updateOrderStatus
+  updateOrderStatus,
+  resetOrders
 } = require('../controllers/orders');
 const { requireAdmin, verifyAdminRole } = require('../middleware/auth');
 
@@ -66,6 +67,13 @@ router.put('/:id/status',
     handleValidationErrors
   ],
   updateOrderStatus
+);
+
+// Reset all orders (admin only)
+router.delete('/reset',
+  requireAdmin,
+  verifyAdminRole,
+  resetOrders
 );
 
 module.exports = router;

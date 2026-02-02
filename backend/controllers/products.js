@@ -182,10 +182,31 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+// Reset all products (admin only)
+const resetProducts = async (req, res) => {
+  try {
+    // Delete all products
+    const { error } = await supabaseAdmin
+      .from('products')
+      .delete()
+      .neq('id', '00000000-0000-0000-0000-000000000000');
+
+    if (error) {
+      return res.status(500).json({ error: 'Failed to delete products' });
+    }
+
+    res.json({ message: 'All products reset successfully' });
+  } catch (error) {
+    console.error('Reset products error:', error);
+    res.status(500).json({ error: 'Failed to reset products' });
+  }
+};
+
 module.exports = {
   getProducts,
   getProduct,
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  resetProducts
 };

@@ -220,9 +220,40 @@ const updateOrderStatus = async (req, res) => {
   }
 };
 
+// Reset all orders (admin only)
+const resetOrders = async (req, res) => {
+  try {
+    // Delete all order items first (foreign key constraint)
+    const { error: itemsError } = await supabaseAdmin
+      .from('order_items')
+      .delete()
+      .neq('id', '00000000-0000-0000-0000-000000000000');
+
+    if (itemsError) {
+      return res.status(500).json({ error: 'Failed to delete order items' });
+    }
+
+    // Delete all orders
+    const { error: ordersError } = await supabaseAdmin
+      .from('orders')
+      .delete()
+      .neq('id', '00000000-0000-0000-0000-000000000000');
+
+    if (ordersError) {
+      return res.status(500).json({ error: 'Failed to delete orders' });
+    }
+
+    res.json({ message: 'All orders reset successfully' });
+  } catch (error) {
+    console.error('Reset orders error:', error);
+    res.status(500).json({ error: 'Failed to reset orders' });
+  }
+};
+
 module.exports = {
   createOrder,
   getOrders,
   getOrder,
-  updateOrderStatus
+  updateOrderStatus,
+  resetOrders
 };

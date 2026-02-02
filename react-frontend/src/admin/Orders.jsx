@@ -58,6 +58,33 @@ const Orders = ({ token }) => {
     }).format(price).replace('XAF', 'FCFA');
   };
 
+  const resetOrders = async () => {
+    try {
+      setLoading(true);
+      
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/orders/reset`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Erreur lors de la suppression des commandes');
+      }
+      
+      // Reload orders
+      await loadOrders();
+      alert('Toutes les commandes ont été supprimées avec succès');
+    } catch (error) {
+      console.error('Erreur lors de la suppression:', error);
+      alert('Erreur lors de la suppression: ' + error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const formatDate = (dateString) => {
     return new Intl.DateTimeFormat('fr-FR', {
       year: 'numeric',
@@ -110,14 +137,14 @@ const Orders = ({ token }) => {
           <button 
             onClick={() => {
               if (confirm('Êtes-vous sûr de vouloir supprimer toutes les commandes ? Cette action est irréversible.')) {
-                // TODO: Implémenter la suppression
-                alert('Fonctionnalité en cours de développement');
+                resetOrders();
               }
             }}
             className="btn btn-danger"
+            disabled={loading}
           >
             <i className="fas fa-trash-alt"></i>
-            Reset commandes
+            {loading ? 'Suppression...' : 'Reset commandes'}
           </button>
         </div>
       </div>

@@ -62,6 +62,47 @@ const Dashboard = ({ token, onLogout }) => {
     }).format(price).replace('XAF', 'FCFA');
   };
 
+  const resetCounters = async () => {
+    try {
+      setLoading(true);
+      
+      // Reset products
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/products/reset`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Erreur lors de la remise à zéro des produits');
+      }
+      
+      // Reset orders
+      const ordersResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/orders/reset`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (!ordersResponse.ok) {
+        throw new Error('Erreur lors de la remise à zéro des commandes');
+      }
+      
+      // Reload stats
+      await loadStats();
+      alert('Compteurs remis à zéro avec succès');
+    } catch (error) {
+      console.error('Erreur lors de la remise à zéro:', error);
+      alert('Erreur lors de la remise à zéro: ' + error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const formatDate = (dateString) => {
     return new Intl.DateTimeFormat('fr-FR', {
       year: 'numeric',
@@ -92,15 +133,15 @@ const Dashboard = ({ token, onLogout }) => {
           </button>
           <button 
             onClick={() => {
-              if (confirm('Êtes-vous sûr de vouloir remettre les compteurs à zéro ? Cette action est irréversible.')) {
-                // TODO: Implémenter la remise à zéro
-                alert('Fonctionnalité en cours de développement');
+              if (confirm('Êtes-vous sûr de vouloir remettre les compteurs à zéro ? Cette action supprimera tous les produits et commandes de façon irréversible.')) {
+                resetCounters();
               }
             }}
             className="btn btn-danger"
+            disabled={loading}
           >
             <i className="fas fa-trash-alt"></i>
-            Reset compteurs
+            {loading ? 'Reset en cours...' : 'Reset compteurs'}
           </button>
           <button onClick={onLogout} className="btn btn-secondary">
             <i className="fas fa-sign-out-alt"></i>

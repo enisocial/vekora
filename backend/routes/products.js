@@ -6,7 +6,8 @@ const {
   getProduct,
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  resetProducts
 } = require('../controllers/products');
 const { requireAdmin, verifyAdminRole } = require('../middleware/auth');
 
@@ -106,6 +107,13 @@ router.delete('/:id',
     handleValidationErrors
   ],
   deleteProduct
+);
+
+// Reset all products (admin only)
+router.delete('/reset',
+  requireAdmin,
+  verifyAdminRole,
+  resetProducts
 );
 
 module.exports = router;
