@@ -4666,21 +4666,24 @@ body {
 }
 
 .product-card.featured::before {
-  content: 'NOUVEAU';
+  content: '⭐';
   position: absolute;
-  top: 12px;
-  right: 12px;
-  background: #dc3545;
+  top: 8px;
+  right: 8px;
+  background: linear-gradient(135deg, #ff6b35, #f7931e);
   color: white;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.65rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  padding: 4px 8px;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 700;
   z-index: 3;
-  box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes pulse-glow {
