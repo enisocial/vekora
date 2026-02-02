@@ -62,7 +62,7 @@ const Orders = ({ token }) => {
     try {
       setLoading(true);
       
-      const response = await fetch(`https://vekora-b5w4.vercel.app/orders/reset`, {
+      const response = await fetch(`https://vekora-b5w4.vercel.app/api/orders/reset`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
