@@ -34,10 +34,23 @@
     <meta property="whatsapp:description" content="Découvrez nos meubles artisanaux sur mesure" />
     <meta property="whatsapp:image" content="https://vekora.store/og-image.jpg" />
     
-    <!-- Geo Tags -->
-    <meta name="geo.region" content="CI" />
-    <meta name="geo.placename" content="Côte d'Ivoire" />
-    <meta name="ICBM" content="5.36, -4.008" />
+    <!-- Advanced SEO for Regional Targeting -->
+    <meta name="geo.position" content="5.36;-4.008" />
+    <meta name="distribution" content="local" />
+    <meta name="coverage" content="Worldwide" />
+    <meta name="target" content="CI,GH,SN,ML,BF,NE,NG,BJ,TG,GN,SL,LR,GM,GW,MR" />
+    <meta name="audience" content="West Africa, Côte d'Ivoire, Furniture, Home Decor" />
+    
+    <!-- Hreflang for regional targeting -->
+    <link rel="alternate" hreflang="fr-CI" href="https://vekora.store" />
+    <link rel="alternate" hreflang="fr-GH" href="https://vekora.store" />
+    <link rel="alternate" hreflang="fr-SN" href="https://vekora.store" />
+    <link rel="alternate" hreflang="fr" href="https://vekora.store" />
+    
+    <!-- DNS Prefetch for faster loading -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
+    <link rel="preconnect" href="https://vekora-b5w4.vercel.app" />
     
     <!-- Business Schema -->
     <script type="application/ld+json">
@@ -73,7 +86,79 @@
     }
     </script>
     
+    <!-- Google Analytics & Ads Geo-targeting -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID', {
+        custom_map: {'custom_parameter_1': 'geo_location'},
+        country: 'CI',
+        region: 'West Africa'
+      });
+    </script>
+    
+    <!-- Facebook Pixel Geo-targeting -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', 'YOUR_PIXEL_ID');
+      fbq('track', 'PageView', {
+        country: 'CI',
+        region: 'West_Africa',
+        content_category: 'furniture',
+        content_name: 'Vekora_Furniture'
+      });
+    </script>
+    
+    <!-- Geo-targeting Script -->
+    <script>
+      // Détection géographique et ciblage
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          
+          // Zone Côte d'Ivoire et Afrique de l'Ouest
+          const isTargetRegion = (
+            (lat >= 4.0 && lat <= 10.5 && lon >= -8.5 && lon <= 3.0) || // Côte d'Ivoire étendue
+            (lat >= -5.0 && lat <= 15.0 && lon >= -20.0 && lon <= 15.0)   // Afrique de l'Ouest
+          );
+          
+          if (isTargetRegion) {
+            // Envoyer signal de géolocalisation positive
+            gtag('event', 'geo_match', {
+              event_category: 'targeting',
+              event_label: 'west_africa_user',
+              custom_parameter_1: 'target_region'
+            });
+            
+            // Optimiser pour les moteurs de recherche locaux
+            document.querySelector('meta[name="geo.position"]')?.setAttribute('content', lat + ';' + lon);
+          }
+        });
+      }
+    </script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(registration => console.log('SW registered'))
+            .catch(error => console.log('SW registration failed'));
+        });
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
