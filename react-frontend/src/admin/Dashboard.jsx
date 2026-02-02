@@ -90,6 +90,18 @@ const Dashboard = ({ token, onLogout }) => {
             <i className="fas fa-sync-alt"></i>
             {loading ? 'Actualisation...' : 'Actualiser'}
           </button>
+          <button 
+            onClick={() => {
+              if (confirm('Êtes-vous sûr de vouloir remettre les compteurs à zéro ? Cette action est irréversible.')) {
+                // TODO: Implémenter la remise à zéro
+                alert('Fonctionnalité en cours de développement');
+              }
+            }}
+            className="btn btn-danger"
+          >
+            <i className="fas fa-trash-alt"></i>
+            Reset compteurs
+          </button>
           <button onClick={onLogout} className="btn btn-secondary">
             <i className="fas fa-sign-out-alt"></i>
             Déconnexion

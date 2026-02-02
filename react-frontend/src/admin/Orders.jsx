@@ -81,14 +81,45 @@ const Orders = ({ token }) => {
     <div className="admin-orders">
       <div className="page-header">
         <h1>Gestion des commandes</h1>
-        <button 
-          onClick={loadOrders} 
-          className="btn btn-secondary"
-          disabled={loading}
-        >
-          <i className="fas fa-sync-alt"></i>
-          {loading ? 'Chargement...' : 'Actualiser'}
-        </button>
+        <div className="header-actions">
+          <button 
+            onClick={loadOrders} 
+            className="btn btn-secondary"
+            disabled={loading}
+          >
+            <i className="fas fa-sync-alt"></i>
+            {loading ? 'Chargement...' : 'Actualiser'}
+          </button>
+          <button 
+            onClick={() => {
+              const csvContent = orders.map(order => 
+                `${order.id},${order.customer_name},${order.customer_phone},${order.total_amount},${order.status},${order.created_at}`
+              ).join('\n');
+              const blob = new Blob([`ID,Client,Téléphone,Total,Statut,Date\n${csvContent}`], { type: 'text/csv' });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = `commandes_${new Date().toISOString().split('T')[0]}.csv`;
+              a.click();
+            }}
+            className="btn btn-primary"
+          >
+            <i className="fas fa-download"></i>
+            Télécharger CSV
+          </button>
+          <button 
+            onClick={() => {
+              if (confirm('Êtes-vous sûr de vouloir supprimer toutes les commandes ? Cette action est irréversible.')) {
+                // TODO: Implémenter la suppression
+                alert('Fonctionnalité en cours de développement');
+              }
+            }}
+            className="btn btn-danger"
+          >
+            <i className="fas fa-trash-alt"></i>
+            Reset commandes
+          </button>
+        </div>
       </div>
 
       {selectedOrder && (
