@@ -11,9 +11,11 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState(0);
+  const [whatsappConfig, setWhatsappConfig] = useState(null);
 
   useEffect(() => {
     loadProduct();
+    loadWhatsAppConfig();
   }, [id]);
 
   const loadProduct = async () => {
@@ -27,6 +29,30 @@ const ProductDetail = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const loadWhatsAppConfig = async () => {
+    try {
+      const response = await ApiService.getWhatsAppConfig();
+      setWhatsappConfig(response.config);
+    } catch (err) {
+      console.error('Erreur WhatsApp config:', err);
+    }
+  };
+
+  const handleWhatsAppOrder = () => {
+    if (!whatsappConfig?.phone_number) {
+      alert('Service WhatsApp non disponible');
+      return;
+    }
+
+    const message = `Bonjour, je souhaite commander ce produit:\n\n` +
+                   `📦 ${product.name}\n` +
+                   `💰 Prix: ${formatPrice(product.price)}\n\n` +
+                   `Merci de me contacter pour finaliser ma commande.`;
+    
+    const whatsappUrl = `https://wa.me/${whatsappConfig.phone_number.replace('+', '')}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   const formatPrice = (price) => {
@@ -174,7 +200,11 @@ const ProductDetail = () => {
                 <i className="fas fa-shopping-cart"></i>
                 Ajouter au panier
               </button>
-              <button className="btn btn-secondary btn-large" style={{marginTop: '10px'}}>
+              <button 
+                onClick={handleWhatsAppOrder}
+                className="btn btn-secondary btn-large" 
+                style={{marginTop: '10px'}}
+              >
                 <i className="fab fa-whatsapp"></i>
                 Commander par WhatsApp
               </button>
@@ -184,15 +214,17 @@ const ProductDetail = () => {
       </div>
       
       {/* WhatsApp flottant */}
-      <a
-        href="https://wa.me/237123456789?text=Bonjour,%20je%20suis%20int%C3%A9ress%C3%A9%20par%20ce%20produit:%20{product.name}"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="whatsapp-float"
-        title="Commander sur WhatsApp"
-      >
-        <i className="fab fa-whatsapp"></i>
-      </a>
+      {whatsappConfig?.phone_number && (
+        <a
+          href={`https://wa.me/${whatsappConfig.phone_number.replace('+', '')}?text=${encodeURIComponent(`Bonjour, je suis intéressé par ce produit: ${product?.name}`)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="whatsapp-float"
+          title="Commander sur WhatsApp"
+        >
+          <i className="fab fa-whatsapp"></i>
+        </a>
+      )}
     </div>
   );
 };
