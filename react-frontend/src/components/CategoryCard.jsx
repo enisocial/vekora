@@ -15,6 +15,9 @@ const CategoryCard = ({ category, onSelect, isSelected }) => {
       </div>
       <div className="category-name-client">
         <h3>{category.name}</h3>
+        {category.description && (
+          <p className="category-description">{category.description}</p>
+        )}
       </div>
     </div>
   );
