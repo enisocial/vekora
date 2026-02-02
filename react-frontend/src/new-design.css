@@ -5251,3 +5251,55 @@ body {
     margin-top: 4px;
   }
 }
+/* Product Detail Price Styles */
+.product-detail .product-price .price-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.product-detail .product-price .original-price {
+  font-size: 2rem;
+  color: #999;
+  text-decoration: line-through;
+  font-weight: 600;
+}
+
+.product-detail .product-price .promotional-price {
+  font-size: 3rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--orange-primary), var(--orange-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Cart Item Price Styles */
+.cart-item .item-price .price-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cart-item .item-price .original-price {
+  font-size: 0.8rem;
+  color: #999;
+  text-decoration: line-through;
+  font-weight: 500;
+}
+
+.cart-item .item-price .promotional-price {
+  font-size: 0.9rem;
+  color: var(--orange-primary);
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .product-detail .product-price .original-price {
+    font-size: 1.5rem;
+  }
+  
+  .product-detail .product-price .promotional-price {
+    font-size: 2.5rem;
+  }
+}

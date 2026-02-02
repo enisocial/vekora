@@ -41,12 +41,15 @@ const ProductDetail = () => {
 
   // Auto-défilement des images
   useEffect(() => {
-    if (product && images.length > 1) {
-      const interval = setInterval(() => {
-        setCurrentImageIndex(prev => (prev + 1) % images.length);
-      }, 4000); // Change d'image toutes les 4 secondes
-      
-      return () => clearInterval(interval);
+    if (product) {
+      const images = [product.image_url, ...(product.additional_images || [])].filter(Boolean);
+      if (images.length > 1) {
+        const interval = setInterval(() => {
+          setCurrentImageIndex(prev => (prev + 1) % images.length);
+        }, 4000); // Change d'image toutes les 4 secondes
+        
+        return () => clearInterval(interval);
+      }
     }
   }, [product]);
 
@@ -54,6 +57,8 @@ const ProductDetail = () => {
     try {
       setLoading(true);
       const productData = await ApiService.getProduct(id);
+      console.log('Product data loaded:', productData);
+      console.log('Additional images:', productData.additional_images);
       setProduct(productData);
     } catch (err) {
       setError('Produit non trouvé');
@@ -143,6 +148,8 @@ const ProductDetail = () => {
   }
 
   const images = [product.image_url, ...(product.additional_images || [])].filter(Boolean);
+  console.log('Images array:', images);
+  console.log('Images length:', images.length);
 
   return (
     <div className="product-detail-page">
@@ -222,7 +229,14 @@ const ProductDetail = () => {
             )}
 
             <div className="product-price">
-              {formatPrice(product.price)}
+              {product.promotional_price && product.promotional_price < product.price ? (
+                <div className="price-container">
+                  <span className="original-price">{formatPrice(product.price)}</span>
+                  <span className="promotional-price">{formatPrice(product.promotional_price)}</span>
+                </div>
+              ) : (
+                formatPrice(product.price)
+              )}
             </div>
 
             <div className="product-features">

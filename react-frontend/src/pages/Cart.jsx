@@ -123,7 +123,16 @@ const Cart = () => {
                 </div>
                 <div className="item-info">
                   <h3>{item.name}</h3>
-                  <p className="item-price">{formatPrice(item.price)}</p>
+                  <div className="item-price">
+                    {item.promotional_price && item.promotional_price < item.price ? (
+                      <div className="price-container">
+                        <span className="original-price">{formatPrice(item.price)}</span>
+                        <span className="promotional-price">{formatPrice(item.promotional_price)}</span>
+                      </div>
+                    ) : (
+                      formatPrice(item.price)
+                    )}
+                  </div>
                 </div>
                 <div className="item-controls">
                   <div className="quantity-controls">
@@ -149,7 +158,10 @@ const Cart = () => {
                   </button>
                 </div>
                 <div className="item-total">
-                  {formatPrice(item.price * item.quantity)}
+                  {item.promotional_price && item.promotional_price < item.price ? 
+                    formatPrice(item.promotional_price * item.quantity) : 
+                    formatPrice(item.price * item.quantity)
+                  }
                 </div>
               </div>
             ))}
