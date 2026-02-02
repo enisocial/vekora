@@ -54,6 +54,12 @@ const getProduct = async (req, res) => {
       return res.status(500).json({ error: error.message });
     }
 
+    // Assurer que additional_images est un tableau
+    if (!product.additional_images) {
+      product.additional_images = [];
+    }
+    
+    console.log('Product additional_images:', product.additional_images);
     res.json(product);
   } catch (error) {
     console.error('Get product error:', error);
@@ -81,6 +87,7 @@ const createProduct = async (req, res) => {
       category_id: req.body.category_id || null,
       image_url: req.body.image_url || null,
       video_url: req.body.video_url || null,
+      additional_images: req.body.additional_images || [],
       is_featured: req.body.is_featured || false
     };
     
@@ -99,23 +106,6 @@ const createProduct = async (req, res) => {
     }
 
     console.log('Product created:', product);
-    
-    // Insert additional images if provided
-    if (req.body.additional_images && req.body.additional_images.length > 0) {
-      const imageInserts = req.body.additional_images.map((url, index) => ({
-        product_id: product.id,
-        image_url: url,
-        display_order: index + 1
-      }));
-
-      const { error: imageError } = await supabaseAdmin
-        .from('product_images')
-        .insert(imageInserts);
-        
-      if (imageError) {
-        console.log('Image insert error:', imageError);
-      }
-    }
     
     res.status(201).json(product);
   } catch (error) {
@@ -142,6 +132,7 @@ const updateProduct = async (req, res) => {
       category_id,
       image_url,
       video_url,
+      additional_images: req.body.additional_images || [],
       is_featured
     };
 
