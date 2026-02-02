@@ -189,7 +189,7 @@ const resetProducts = async (req, res) => {
     const { error } = await supabaseAdmin
       .from('products')
       .delete()
-      .gt('id', '0');
+      .gte('created_at', '1900-01-01');
 
     if (error) {
       console.error('Products delete error:', error);

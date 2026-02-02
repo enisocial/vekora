@@ -227,7 +227,7 @@ const resetOrders = async (req, res) => {
     const { error: itemsError } = await supabaseAdmin
       .from('order_items')
       .delete()
-      .gt('id', '0');
+      .gte('created_at', '1900-01-01');
 
     if (itemsError) {
       console.error('Items delete error:', itemsError);
@@ -238,7 +238,7 @@ const resetOrders = async (req, res) => {
     const { error: ordersError } = await supabaseAdmin
       .from('orders')
       .delete()
-      .gt('id', '0');
+      .gte('created_at', '1900-01-01');
 
     if (ordersError) {
       console.error('Orders delete error:', ordersError);
