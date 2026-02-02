@@ -11,6 +11,7 @@ const categoryRoutes = require('./routes/categories');
 const orderRoutes = require('./routes/orders');
 const heroVideoRoutes = require('./routes/heroVideo');
 const whatsappRoutes = require('./routes/whatsapp-simple');
+const visitorsRoutes = require('./routes/visitors');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -75,6 +76,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/hero-video', heroVideoRoutes);
 app.use('/api/whatsapp', whatsappRoutes);
+app.use('/api/visitors', visitorsRoutes);
 
 // 404 for unknown API routes
 app.use('/api/*', (req, res) => {
@@ -96,6 +98,7 @@ app.listen(PORT, () => {
   console.log(`📦 Orders API: http://localhost:${PORT}/api/orders`);
   console.log(`🎬 Hero Video API: http://localhost:${PORT}/api/hero-video`);
   console.log(`📱 WhatsApp API: http://localhost:${PORT}/api/whatsapp`);
+  console.log(`👥 Visitors API: http://localhost:${PORT}/api/visitors`);
 });
 
 module.exports = app;

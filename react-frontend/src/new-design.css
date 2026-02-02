@@ -5338,3 +5338,11 @@ body {
     padding: 8px 12px;
   }
 }
+/* Visitors stat card icon */
+.stat-card-icon.visitors {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.stat-card-icon.visitors i {
+  color: white;
+}

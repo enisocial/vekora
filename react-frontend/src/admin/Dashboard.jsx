@@ -8,7 +8,12 @@ const Dashboard = ({ token, onLogout }) => {
     pendingOrders: 0,
     confirmedOrders: 0,
     totalRevenue: 0,
-    recentOrders: []
+    recentOrders: [],
+    visitors: {
+      today: 0,
+      total: 0,
+      week: 0
+    }
   });
   const [loading, setLoading] = useState(true);
 
@@ -19,10 +24,17 @@ const Dashboard = ({ token, onLogout }) => {
   const loadStats = async () => {
     try {
       setLoading(true);
-      const [productsData, ordersData] = await Promise.all([
-        ApiService.getProducts(),
-        ApiService.getOrders({}, token)
+      console.log('Loading dashboard stats...');
+      
+      const [productsData, ordersData, visitorsData] = await Promise.all([
+        fetch('https://vekora-b5w4.vercel.app/api/products').then(r => r.json()),
+        fetch('https://vekora-b5w4.vercel.app/api/orders').then(r => r.json()),
+        fetch('https://vekora-b5w4.vercel.app/api/visitors/stats').then(r => r.json())
       ]);
+
+      console.log('Products data:', productsData);
+      console.log('Orders data:', ordersData);
+      console.log('Visitors data:', visitorsData);
 
       const products = productsData.data || productsData || [];
       const orders = ordersData.orders || ordersData.data || ordersData || [];
@@ -37,7 +49,8 @@ const Dashboard = ({ token, onLogout }) => {
         pendingOrders: pendingOrders.length,
         confirmedOrders: confirmedOrders.length,
         totalRevenue,
-        recentOrders: Array.isArray(orders) ? orders.slice(0, 5) : []
+        recentOrders: Array.isArray(orders) ? orders.slice(0, 5) : [],
+        visitors: visitorsData || { today: 0, total: 0, week: 0 }
       });
     } catch (error) {
       console.error('Erreur lors du chargement des statistiques:', error);
@@ -47,7 +60,8 @@ const Dashboard = ({ token, onLogout }) => {
         pendingOrders: 0,
         confirmedOrders: 0,
         totalRevenue: 0,
-        recentOrders: []
+        recentOrders: [],
+        visitors: { today: 0, total: 0, week: 0 }
       });
     } finally {
       setLoading(false);
@@ -187,6 +201,19 @@ const Dashboard = ({ token, onLogout }) => {
           <div className="stat-card-value">{formatPrice(stats.totalRevenue)}</div>
           <div className="stat-card-change positive">
             Total des ventes
+          </div>
+        </div>
+
+        <div className="stat-card">
+          <div className="stat-card-header">
+            <h4 className="stat-card-title">Visiteurs</h4>
+            <div className="stat-card-icon visitors">
+              <i className="fas fa-users"></i>
+            </div>
+          </div>
+          <div className="stat-card-value">{stats.visitors.today}</div>
+          <div className="stat-card-change positive">
+            Aujourd'hui • {stats.visitors.week} cette semaine
           </div>
         </div>
       </div>

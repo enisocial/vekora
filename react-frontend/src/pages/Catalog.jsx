@@ -40,6 +40,12 @@ const Catalog = () => {
   };
 
   useEffect(() => {
+    // Track visitor on page load
+    fetch('https://vekora-b5w4.vercel.app/api/visitors/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    }).catch(() => {});
+
     // SEO: Mettre à jour le titre et la description de la page
     document.title = 'Vekora - Meubles & Mobiliers sur Mesure | Précommande Artisanale';
     const metaDescription = document.querySelector('meta[name="description"]');
