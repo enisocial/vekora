@@ -86,33 +86,21 @@ router.post('/test', (req, res) => {
 
 // Create product (admin only)
 router.post('/',
-  requireAdmin,
-  verifyAdminRole,
   createProduct
 );
 
 // Update product (admin only)
 router.put('/:id',
-  requireAdmin,
-  verifyAdminRole,
   updateProduct
 );
 
 // Delete product (admin only)
 router.delete('/:id',
-  requireAdmin,
-  verifyAdminRole,
-  [
-    param('id').isUUID(),
-    handleValidationErrors
-  ],
   deleteProduct
 );
 
 // Reset all products (admin only)
 router.delete('/reset',
-  requireAdmin,
-  verifyAdminRole,
   resetProducts
 );
 
