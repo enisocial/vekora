@@ -12,11 +12,23 @@ const ProductDetail = () => {
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [whatsappConfig, setWhatsappConfig] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     loadProduct();
     loadWhatsAppConfig();
   }, [id]);
+
+  // Auto-défilement des images
+  useEffect(() => {
+    if (product && images.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentImageIndex(prev => (prev + 1) % images.length);
+      }, 4000); // Change d'image toutes les 4 secondes
+      
+      return () => clearInterval(interval);
+    }
+  }, [product]);
 
   const loadProduct = async () => {
     try {
@@ -128,11 +140,39 @@ const ProductDetail = () => {
                   <source src={product.video_url} type="video/mp4" />
                 </video>
               ) : (
-                <img 
-                  src={images[selectedImage] || '/placeholder.jpg'} 
-                  alt={product.name}
-                  className="main-product-image"
-                />
+                <div className="image-slider">
+                  <img 
+                    src={images[currentImageIndex] || '/placeholder.jpg'} 
+                    alt={product.name}
+                    className="main-product-image"
+                    key={currentImageIndex}
+                  />
+                  {images.length > 1 && (
+                    <>
+                      <button 
+                        className="slider-btn prev-btn"
+                        onClick={() => setCurrentImageIndex(prev => prev === 0 ? images.length - 1 : prev - 1)}
+                      >
+                        <i className="fas fa-chevron-left"></i>
+                      </button>
+                      <button 
+                        className="slider-btn next-btn"
+                        onClick={() => setCurrentImageIndex(prev => (prev + 1) % images.length)}
+                      >
+                        <i className="fas fa-chevron-right"></i>
+                      </button>
+                      <div className="slider-dots">
+                        {images.map((_, index) => (
+                          <button
+                            key={index}
+                            className={`dot ${currentImageIndex === index ? 'active' : ''}`}
+                            onClick={() => setCurrentImageIndex(index)}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
               )}
             </div>
             
@@ -143,8 +183,8 @@ const ProductDetail = () => {
                     key={index}
                     src={image}
                     alt={`${product.name} ${index + 1}`}
-                    className={`thumbnail ${selectedImage === index ? 'active' : ''}`}
-                    onClick={() => setSelectedImage(index)}
+                    className={`thumbnail ${currentImageIndex === index ? 'active' : ''}`}
+                    onClick={() => setCurrentImageIndex(index)}
                   />
                 ))}
               </div>

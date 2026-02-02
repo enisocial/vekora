@@ -76,7 +76,21 @@ const Products = ({ token }) => {
 
     const url = await uploadFile(file, type);
     if (url) {
-      if (type === 'additional') {
+      if (type === 'image') {
+        // Si pas d'image principale, la définir comme principale
+        if (!formData.image_url) {
+          setFormData({
+            ...formData,
+            image_url: url
+          });
+        } else {
+          // Sinon l'ajouter aux images supplémentaires
+          setFormData({
+            ...formData,
+            additional_images: [...formData.additional_images, url]
+          });
+        }
+      } else if (type === 'additional') {
         setFormData({
           ...formData,
           additional_images: [...formData.additional_images, url]
@@ -344,17 +358,55 @@ const Products = ({ token }) => {
               </div>
 
               <div className="form-group">
-                <label>Image du produit</label>
+                <label>Images du produit</label>
                 <div className="file-upload-container">
                   <input
                     type="file"
                     accept="image/*"
-                    onChange={(e) => handleFileChange(e, 'image')}
+                    multiple
+                    onChange={(e) => {
+                      const files = Array.from(e.target.files);
+                      files.forEach(file => handleFileChange({target: {files: [file]}}, 'image'));
+                    }}
                     disabled={uploading}
                   />
+                  <small>Vous pouvez sélectionner plusieurs images à la fois</small>
+                  
+                  {/* Affichage de l'image principale */}
                   {formData.image_url && (
-                    <div className="file-preview">
-                      <img src={formData.image_url} alt="Preview" style={{width: '100px', height: '100px', objectFit: 'cover'}} />
+                    <div className="main-image-preview">
+                      <h4>Image principale :</h4>
+                      <div className="image-preview-item">
+                        <img src={formData.image_url} alt="Image principale" style={{width: '120px', height: '120px', objectFit: 'cover'}} />
+                        <button 
+                          type="button" 
+                          onClick={() => setFormData({...formData, image_url: ''})}
+                          className="remove-image-btn"
+                        >
+                          ×
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Affichage des images supplémentaires */}
+                  {formData.additional_images.length > 0 && (
+                    <div className="additional-images-preview">
+                      <h4>Images supplémentaires :</h4>
+                      <div className="additional-images-grid">
+                        {formData.additional_images.map((url, index) => (
+                          <div key={index} className="image-preview-item">
+                            <img src={url} alt={`Image ${index + 1}`} style={{width: '100px', height: '100px', objectFit: 'cover'}} />
+                            <button 
+                              type="button" 
+                              onClick={() => removeAdditionalImage(index)}
+                              className="remove-image-btn"
+                            >
+                              ×
+                            </button>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -378,28 +430,19 @@ const Products = ({ token }) => {
               </div>
 
               <div className="form-group">
-                <label>Images supplémentaires</label>
+                <label>Images supplémentaires (optionnel)</label>
                 <div className="file-upload-container">
                   <input
                     type="file"
                     accept="image/*"
-                    onChange={(e) => handleFileChange(e, 'additional')}
+                    multiple
+                    onChange={(e) => {
+                      const files = Array.from(e.target.files);
+                      files.forEach(file => handleFileChange({target: {files: [file]}}, 'additional'));
+                    }}
                     disabled={uploading}
                   />
-                  <div className="additional-images-grid">
-                    {formData.additional_images.map((url, index) => (
-                      <div key={index} className="additional-image-item">
-                        <img src={url} alt={`Image ${index + 1}`} style={{width: '80px', height: '80px', objectFit: 'cover'}} />
-                        <button 
-                          type="button" 
-                          onClick={() => removeAdditionalImage(index)}
-                          className="remove-image-btn"
-                        >
-                          ×
-                        </button>
-                      </div>
-                    ))}
-                  </div>
+                  <small>Ajoutez d'autres vues du produit</small>
                 </div>
               </div>
 
