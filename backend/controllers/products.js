@@ -189,9 +189,10 @@ const resetProducts = async (req, res) => {
     const { error } = await supabaseAdmin
       .from('products')
       .delete()
-      .neq('id', '00000000-0000-0000-0000-000000000000');
+      .gt('id', '0');
 
     if (error) {
+      console.error('Products delete error:', error);
       return res.status(500).json({ error: 'Failed to delete products' });
     }
 

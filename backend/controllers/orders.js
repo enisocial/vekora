@@ -227,9 +227,10 @@ const resetOrders = async (req, res) => {
     const { error: itemsError } = await supabaseAdmin
       .from('order_items')
       .delete()
-      .neq('id', '00000000-0000-0000-0000-000000000000');
+      .gt('id', '0');
 
     if (itemsError) {
+      console.error('Items delete error:', itemsError);
       return res.status(500).json({ error: 'Failed to delete order items' });
     }
 
@@ -237,9 +238,10 @@ const resetOrders = async (req, res) => {
     const { error: ordersError } = await supabaseAdmin
       .from('orders')
       .delete()
-      .neq('id', '00000000-0000-0000-0000-000000000000');
+      .gt('id', '0');
 
     if (ordersError) {
+      console.error('Orders delete error:', ordersError);
       return res.status(500).json({ error: 'Failed to delete orders' });
     }
 
