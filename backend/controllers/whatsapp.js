@@ -2,7 +2,7 @@ const { supabase, supabaseAdmin } = require('../config/supabase');
 
 const getWhatsAppConfig = async (req, res) => {
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from('whatsapp_config')
       .select('*')
       .single();
@@ -12,7 +12,6 @@ const getWhatsAppConfig = async (req, res) => {
       return res.status(500).json({ error: error.message });
     }
 
-    // Si pas de config, retourner des valeurs par défaut
     const config = data ? {
       phone_number: data.phone || '',
       message_template: data.message || 'Bonjour, je suis intéressé par vos produits',
@@ -40,15 +39,13 @@ const setWhatsAppConfig = async (req, res) => {
       is_active: is_active || false
     };
 
-    // Essayer de mettre à jour d'abord
-    const { data: existingData } = await supabase
+    const { data: existingData } = await supabaseAdmin
       .from('whatsapp_config')
       .select('id')
       .single();
 
     let result;
     if (existingData) {
-      // Mettre à jour
       result = await supabaseAdmin
         .from('whatsapp_config')
         .update(configData)
@@ -56,7 +53,6 @@ const setWhatsAppConfig = async (req, res) => {
         .select()
         .single();
     } else {
-      // Créer
       result = await supabaseAdmin
         .from('whatsapp_config')
         .insert(configData)
