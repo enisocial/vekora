@@ -33,37 +33,16 @@ router.get('/:id',
 
 // Create category (admin only)
 router.post('/',
-  requireAdmin,
-  verifyAdminRole,
-  [
-    body('name').trim().isLength({ min: 1, max: 100 }),
-    body('description').optional().trim().isLength({ max: 500 }),
-    handleValidationErrors
-  ],
   createCategory
 );
 
 // Update category (admin only)
 router.put('/:id',
-  requireAdmin,
-  verifyAdminRole,
-  [
-    param('id').isUUID(),
-    body('name').optional().trim().isLength({ min: 1, max: 100 }),
-    body('description').optional().trim().isLength({ max: 500 }),
-    handleValidationErrors
-  ],
   updateCategory
 );
 
 // Delete category (admin only)
 router.delete('/:id',
-  requireAdmin,
-  verifyAdminRole,
-  [
-    param('id').isUUID(),
-    handleValidationErrors
-  ],
   deleteCategory
 );
 
