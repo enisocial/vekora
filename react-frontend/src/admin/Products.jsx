@@ -165,7 +165,9 @@ const Products = ({ token }) => {
 
   const handleEdit = (product) => {
     setEditingProduct(product);
-    const additionalImages = product.product_images ? product.product_images.map(img => img.image_url) : [];
+    console.log('Editing product:', product);
+    console.log('Product additional_images:', product.additional_images);
+    
     setFormData({
       name: product.name,
       description: product.description || '',
@@ -174,7 +176,7 @@ const Products = ({ token }) => {
       category_id: product.category_id || '',
       image_url: product.image_url || '',
       video_url: product.video_url || '',
-      additional_images: additionalImages,
+      additional_images: product.additional_images || [],
       is_featured: product.is_featured || false
     });
     setShowForm(true);
