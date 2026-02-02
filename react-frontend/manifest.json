@@ -1,0 +1,25 @@
+{
+  "name": "Vekora - Meubles & Mobiliers sur Mesure",
+  "short_name": "Vekora",
+  "description": "Spécialiste meubles et mobiliers artisanaux sur mesure en Côte d'Ivoire",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ff6b35",
+  "theme_color": "#ff6b35",
+  "orientation": "portrait-primary",
+  "categories": ["shopping", "lifestyle", "business"],
+  "lang": "fr",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='vGradient' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' style='stop-color:%23ff6b35;stop-opacity:1' /><stop offset='100%25' style='stop-color:%23f7931e;stop-opacity:1' /></linearGradient></defs><circle cx='50' cy='50' r='45' fill='url(%23vGradient)' stroke='%23fff' stroke-width='3'/><path d='M25 25 L50 70 L75 25' stroke='%23fff' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='vGradient' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' style='stop-color:%23ff6b35;stop-opacity:1' /><stop offset='100%25' style='stop-color:%23f7931e;stop-opacity:1' /></linearGradient></defs><circle cx='50' cy='50' r='45' fill='url(%23vGradient)' stroke='%23fff' stroke-width='3'/><path d='M25 25 L50 70 L75 25' stroke='%23fff' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
