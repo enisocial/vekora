@@ -138,6 +138,21 @@ const ProductDetail = () => {
               {formatPrice(product.price)}
             </div>
 
+            <div className="product-features">
+              <div className="feature-item">
+                <i className="fas fa-shipping-fast"></i>
+                <span>Livraison 24-48h</span>
+              </div>
+              <div className="feature-item">
+                <i className="fas fa-shield-alt"></i>
+                <span>Garantie produit</span>
+              </div>
+              <div className="feature-item">
+                <i className="fas fa-phone"></i>
+                <span>Support client</span>
+              </div>
+            </div>
+
             {product.description && (
               <div className="product-description">
                 <h3>Description</h3>
@@ -147,15 +162,37 @@ const ProductDetail = () => {
               </div>
             )}
 
+            <div className="delivery-info">
+              <h4><i className="fas fa-truck"></i> Informations de livraison</h4>
+              <p>• Livraison rapide sous 24-48h dans toute la région</p>
+              <p>• Frais de livraison calculés selon votre localisation</p>
+              <p>• Possibilité de retrait en magasin</p>
+            </div>
+
             <div className="product-actions">
               <button onClick={handleAddToCart} className="btn btn-primary btn-large">
                 <i className="fas fa-shopping-cart"></i>
                 Ajouter au panier
               </button>
+              <button className="btn btn-secondary btn-large" style={{marginTop: '10px'}}>
+                <i className="fab fa-whatsapp"></i>
+                Commander par WhatsApp
+              </button>
             </div>
           </div>
         </div>
       </div>
+      
+      {/* WhatsApp flottant */}
+      <a
+        href="https://wa.me/237123456789?text=Bonjour,%20je%20suis%20int%C3%A9ress%C3%A9%20par%20ce%20produit:%20{product.name}"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="whatsapp-float"
+        title="Commander sur WhatsApp"
+      >
+        <i className="fab fa-whatsapp"></i>
+      </a>
     </div>
   );
 };
