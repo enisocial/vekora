@@ -16,8 +16,12 @@ const WhatsApp = ({ token }) => {
   const loadConfig = async () => {
     try {
       const response = await ApiService.getWhatsAppConfig();
+      console.log('WhatsApp config response:', response);
       if (response.config) {
-        setConfig(response.config);
+        setConfig({
+          phone_number: response.config.phone_number || '',
+          message_template: response.config.message_template || 'Bonjour, je suis intéressé par vos produits sur Vekora.'
+        });
       }
     } catch (error) {
       console.error('Erreur lors du chargement de la config WhatsApp:', error);
@@ -31,9 +35,12 @@ const WhatsApp = ({ token }) => {
     setSaving(true);
     
     try {
-      await ApiService.setWhatsAppConfig(config, token);
+      console.log('Saving WhatsApp config:', config);
+      const response = await ApiService.setWhatsAppConfig(config, token);
+      console.log('Save response:', response);
       alert('Configuration WhatsApp mise à jour avec succès !');
     } catch (error) {
+      console.error('Save error:', error);
       alert('Erreur: ' + error.message);
     } finally {
       setSaving(false);

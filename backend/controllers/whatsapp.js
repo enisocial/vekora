@@ -14,16 +14,16 @@ const getWhatsAppConfig = async (req, res) => {
 
     // Si pas de config, retourner des valeurs par défaut
     const config = data ? {
-      phone: data.phone_number || data.phone || '',
-      message: data.message_template || data.message || 'Bonjour, je suis intéressé par vos produits',
+      phone_number: data.phone || '',
+      message_template: data.message || 'Bonjour, je suis intéressé par vos produits',
       is_active: data.is_active || false
     } : {
-      phone: '',
-      message: 'Bonjour, je suis intéressé par vos produits',
+      phone_number: '',
+      message_template: 'Bonjour, je suis intéressé par vos produits',
       is_active: false
     };
 
-    res.json(config);
+    res.json({ config });
   } catch (error) {
     console.error('WhatsApp config error:', error);
     res.status(500).json({ error: 'Failed to get WhatsApp config' });
@@ -32,11 +32,11 @@ const getWhatsAppConfig = async (req, res) => {
 
 const setWhatsAppConfig = async (req, res) => {
   try {
-    const { phone, message, is_active } = req.body;
+    const { phone_number, message_template, is_active } = req.body;
 
     const configData = {
-      phone: phone || '',
-      message: message || 'Bonjour, je suis intéressé par vos produits',
+      phone: phone_number || '',
+      message: message_template || 'Bonjour, je suis intéressé par vos produits',
       is_active: is_active || false
     };
 
@@ -65,6 +65,7 @@ const setWhatsAppConfig = async (req, res) => {
     }
 
     if (result.error) {
+      console.error('WhatsApp save error:', result.error);
       return res.status(500).json({ error: result.error.message });
     }
 
