@@ -46,10 +46,11 @@ const ProductDetail = () => {
       return;
     }
 
-    const message = `Bonjour, je souhaite commander ce produit:\n\n` +
-                   `📦 ${product.name}\n` +
+    const message = `Bonjour, je souhaite faire une précommande pour ce meuble :\n\n` +
+                   `🪑 ${product.name}\n` +
                    `💰 Prix: ${formatPrice(product.price)}\n\n` +
-                   `Merci de me contacter pour finaliser ma commande.`;
+                   `Je souhaite prendre rendez-vous pour verser l'acompte et finaliser ma précommande.\n\n` +
+                   `Merci de me contacter pour organiser cela.`;
     
     const whatsappUrl = `https://wa.me/${whatsappConfig.phone_number.replace('+', '')}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
@@ -197,8 +198,8 @@ const ProductDetail = () => {
 
             <div className="product-actions">
               <button onClick={handleAddToCart} className="btn btn-primary btn-large">
-                <i className="fas fa-shopping-cart"></i>
-                Ajouter au panier
+                <i className="fas fa-calendar-plus"></i>
+                Faire une précommande
               </button>
               <button 
                 onClick={handleWhatsAppOrder}
@@ -206,8 +207,18 @@ const ProductDetail = () => {
                 style={{marginTop: '10px'}}
               >
                 <i className="fab fa-whatsapp"></i>
-                Commander par WhatsApp
+                Précommander par WhatsApp
               </button>
+            </div>
+
+            <div className="preorder-info-box">
+              <h4><i className="fas fa-info-circle"></i> Produit en précommande</h4>
+              <div className="preorder-details">
+                <p><i className="fas fa-hammer"></i> <strong>Fabrication après validation</strong></p>
+                <p><i className="fas fa-clock"></i> <strong>Livraison estimée :</strong> 7 à 14 jours</p>
+                <p><i className="fas fa-handshake"></i> <strong>Acompte à verser</strong> à l'atelier ou lors d'un rendez-vous</p>
+                <p><i className="fas fa-truck"></i> <strong>Livraison</strong> après validation de l'acompte</p>
+              </div>
             </div>
           </div>
         </div>

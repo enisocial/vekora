@@ -174,8 +174,8 @@ const Catalog = () => {
           </button>
         )}
         <div className="hero-content">
-          <h1>Vekora - Marketplace Multi-Produits</h1>
-          <p>Nous permettons aux clients d'acheter tout ce dont ils ont besoin, facilement, rapidement, et en toute sécurité</p>
+          <h1>Vekora - Meubles & Mobiliers sur Mesure</h1>
+          <p>Précommandez vos meubles de qualité artisanale. Fabrication après validation, livraison sous 7 à 14 jours.</p>
         </div>
       </div>
 
@@ -184,8 +184,8 @@ const Catalog = () => {
         {featuredProducts.length > 0 && (
           <div className="featured-section">
             <div className="section-header">
-              <h2>🎆 Nos Nouveautés</h2>
-              <p>Découvrez nos derniers produits sélectionnés pour vous</p>
+              <h2>🪑 Nos Nouveautés</h2>
+              <p>Découvrez nos derniers meubles disponibles en précommande</p>
             </div>
             <div className="featured-products-grid">
               {featuredProducts.map(product => (
@@ -216,8 +216,8 @@ const Catalog = () => {
         <div className="catalog-header">
           <h2>
             {selectedCategory 
-              ? `Produits - ${categories.find(c => c.id === selectedCategory)?.name || 'Catégorie'}`
-              : 'Tous nos Produits'
+              ? `Meubles - ${categories.find(c => c.id === selectedCategory)?.name || 'Catégorie'}`
+              : 'Tous nos Meubles & Mobiliers'
             }
           </h2>
           
@@ -227,7 +227,7 @@ const Catalog = () => {
               className="btn btn-secondary"
             >
               <i className="fas fa-times"></i>
-              Voir tous les produits
+              Voir tous les meubles
             </button>
           )}
         </div>
@@ -240,11 +240,11 @@ const Catalog = () => {
           ) : (
             <div className="empty-state">
               <i className="fas fa-box-open"></i>
-              <h3>Aucun produit trouvé</h3>
+              <h3>Aucun meuble trouvé</h3>
               <p>
                 {selectedCategory 
-                  ? 'Aucun produit dans cette catégorie'
-                  : 'Aucun produit disponible'
+                  ? 'Aucun meuble dans cette catégorie'
+                  : 'Aucun meuble disponible'
                 }
               </p>
             </div>
@@ -270,11 +270,11 @@ const Catalog = () => {
       {/* Bouton WhatsApp flottant */}
       {whatsappConfig && whatsappConfig.phone && whatsappConfig.is_active && (
         <a
-          href={`https://wa.me/${whatsappConfig.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(whatsappConfig.message || 'Bonjour, je suis intéressé par vos produits')}`}
+          href={`https://wa.me/${whatsappConfig.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Bonjour, je souhaite des informations sur vos meubles en précommande')}`}
           target="_blank"
           rel="noopener noreferrer"
           className="whatsapp-float"
-          title="Contactez-nous sur WhatsApp"
+          title="Précommander sur WhatsApp"
         >
           <i className="fab fa-whatsapp"></i>
         </a>

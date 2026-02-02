@@ -13,7 +13,6 @@ const ProductCard = ({ product }) => {
     setIsAdding(true);
     addToCart(product);
     
-    // Animation de feedback
     setTimeout(() => {
       setIsAdding(false);
     }, 600);
@@ -53,10 +52,17 @@ const ProductCard = ({ product }) => {
             <i className="fas fa-play"></i>
           </div>
         )}
+        <div className="preorder-badge">
+          <i className="fas fa-clock"></i>
+          Précommande
+        </div>
       </div>
       <div className="product-info">
         <h3 className="product-name">{product.name}</h3>
         <p className="product-description">{product.description}</p>
+        <div className="preorder-info">
+          <small><i className="fas fa-hammer"></i> Fabrication après commande</small>
+        </div>
         <div className="product-footer">
           <div className="product-price">{formatPrice(product.price, product.promotional_price)}</div>
           <button 
@@ -64,8 +70,8 @@ const ProductCard = ({ product }) => {
             onClick={handleAddToCart}
             disabled={isAdding}
           >
-            <i className={`fas ${isAdding ? 'fa-check' : 'fa-cart-plus'}`}></i>
-            {isAdding ? 'Ajouté!' : 'Ajouter'}
+            <i className={`fas ${isAdding ? 'fa-check' : 'fa-calendar-plus'}`}></i>
+            {isAdding ? 'Ajouté!' : 'Précommander'}
           </button>
         </div>
       </div>

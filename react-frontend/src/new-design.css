@@ -4902,3 +4902,84 @@ body {
     border-top: 1px solid rgba(0, 0, 0, 0.1);
   }
 }
+/* Preorder Badge */
+.preorder-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+.preorder-info {
+  margin: 8px 0;
+  color: #666;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.preorder-info i {
+  color: #28a745;
+}
+
+/* Preorder Info Box */
+.preorder-info-box {
+  background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(32, 201, 151, 0.05));
+  border: 1px solid rgba(40, 167, 69, 0.2);
+  border-radius: 15px;
+  padding: 20px;
+  margin: 25px 0;
+}
+
+.preorder-info-box h4 {
+  color: #28a745;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preorder-details p {
+  margin: 8px 0;
+  color: #555;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.preorder-details i {
+  color: #28a745;
+  width: 16px;
+  text-align: center;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .preorder-badge {
+    font-size: 0.65rem;
+    padding: 3px 6px;
+  }
+  
+  .preorder-info-box {
+    padding: 15px;
+    margin: 20px 0;
+  }
+  
+  .preorder-details p {
+    font-size: 0.9rem;
+  }
+}
