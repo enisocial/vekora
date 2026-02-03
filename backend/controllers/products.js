@@ -14,8 +14,7 @@ const getProducts = async (req, res) => {
           name
         )
       `)
-      .order('created_at', { ascending: false })
-      .limit(20);
+      .order('created_at', { ascending: false });
 
     if (error) {
       console.log('Get products error:', error);
