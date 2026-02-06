@@ -13,6 +13,7 @@ const heroVideoRoutes = require('./routes/heroVideo');
 const whatsappRoutes = require('./routes/whatsapp-simple');
 const visitorsRoutes = require('./routes/visitors');
 const catalogRoutes = require('./routes/catalog');
+const facebookConversionsRoutes = require('./routes/facebookConversions');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -79,6 +80,7 @@ app.use('/api/hero-video', heroVideoRoutes);
 app.use('/api/whatsapp', whatsappRoutes);
 app.use('/api/visitors', visitorsRoutes);
 app.use('/api/catalog', catalogRoutes);
+app.use('/api/fb-conversions', facebookConversionsRoutes);
 
 // 404 for unknown API routes
 app.use('/api/*', (req, res) => {
