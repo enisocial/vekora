@@ -397,6 +397,7 @@ const Products = ({ token }) => {
                     multiple
                     onChange={(e) => handleMultipleFileChange(e, 'image')}
                     disabled={uploading}
+                    key={formData.image_url}
                   />
                   {uploading && <small>Upload en cours...</small>}
                   {!uploading && <small>Vous pouvez sélectionner plusieurs images à la fois</small>}
@@ -467,6 +468,7 @@ const Products = ({ token }) => {
                     multiple
                     onChange={(e) => handleMultipleFileChange(e, 'additional')}
                     disabled={uploading}
+                    key={formData.additional_images.length}
                   />
                   {uploading && <small>Upload en cours...</small>}
                   {!uploading && <small>Ajoutez d'autres vues du produit</small>}
