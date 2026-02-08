@@ -46,9 +46,8 @@ const Products = ({ token }) => {
 
   const uploadFile = async (file, type = 'image') => {
     try {
-      setUploading(true);
       const fileExt = file.name.split('.').pop();
-      const fileName = `${type}_${Date.now()}.${fileExt}`;
+      const fileName = `${type}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
       
       const { data, error } = await supabase.storage
         .from('products-media')
@@ -65,8 +64,6 @@ const Products = ({ token }) => {
       console.error('Erreur upload:', error);
       alert('Erreur lors de l\'upload: ' + error.message);
       return null;
-    } finally {
-      setUploading(false);
     }
   };
 
