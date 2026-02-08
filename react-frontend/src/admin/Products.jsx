@@ -70,6 +70,35 @@ const Products = ({ token }) => {
     }
   };
 
+  const handleMultipleFileChange = async (e, type) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+
+    setUploading(true);
+    const uploadedUrls = [];
+
+    for (const file of files) {
+      const url = await uploadFile(file, type);
+      if (url) uploadedUrls.push(url);
+    }
+
+    if (uploadedUrls.length > 0) {
+      if (type === 'image' && !formData.image_url) {
+        setFormData({
+          ...formData,
+          image_url: uploadedUrls[0],
+          additional_images: [...formData.additional_images, ...uploadedUrls.slice(1)]
+        });
+      } else {
+        setFormData({
+          ...formData,
+          additional_images: [...formData.additional_images, ...uploadedUrls]
+        });
+      }
+    }
+    setUploading(false);
+  };
+
   const handleFileChange = async (e, type) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -366,13 +395,11 @@ const Products = ({ token }) => {
                     type="file"
                     accept="image/*"
                     multiple
-                    onChange={(e) => {
-                      const files = Array.from(e.target.files);
-                      files.forEach(file => handleFileChange({target: {files: [file]}}, 'image'));
-                    }}
+                    onChange={(e) => handleMultipleFileChange(e, 'image')}
                     disabled={uploading}
                   />
-                  <small>Vous pouvez sélectionner plusieurs images à la fois</small>
+                  {uploading && <small>Upload en cours...</small>}
+                  {!uploading && <small>Vous pouvez sélectionner plusieurs images à la fois</small>}
                   
                   {/* Affichage de l'image principale */}
                   {formData.image_url && (
@@ -438,13 +465,11 @@ const Products = ({ token }) => {
                     type="file"
                     accept="image/*"
                     multiple
-                    onChange={(e) => {
-                      const files = Array.from(e.target.files);
-                      files.forEach(file => handleFileChange({target: {files: [file]}}, 'additional'));
-                    }}
+                    onChange={(e) => handleMultipleFileChange(e, 'additional')}
                     disabled={uploading}
                   />
-                  <small>Ajoutez d'autres vues du produit</small>
+                  {uploading && <small>Upload en cours...</small>}
+                  {!uploading && <small>Ajoutez d'autres vues du produit</small>}
                 </div>
               </div>
 
