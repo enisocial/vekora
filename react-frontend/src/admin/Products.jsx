@@ -100,34 +100,24 @@ const Products = ({ token }) => {
     const file = e.target.files[0];
     if (!file) return;
 
+    setUploading(true);
     const url = await uploadFile(file, type);
+    setUploading(false);
+    
     if (url) {
       if (type === 'image') {
-        // Si pas d'image principale, la définir comme principale
         if (!formData.image_url) {
-          setFormData({
-            ...formData,
-            image_url: url
-          });
+          setFormData({...formData, image_url: url});
         } else {
-          // Sinon l'ajouter aux images supplémentaires
-          setFormData({
-            ...formData,
-            additional_images: [...formData.additional_images, url]
-          });
+          setFormData({...formData, additional_images: [...formData.additional_images, url]});
         }
+      } else if (type === 'video') {
+        setFormData({...formData, video_url: url});
       } else if (type === 'additional') {
-        setFormData({
-          ...formData,
-          additional_images: [...formData.additional_images, url]
-        });
-      } else {
-        setFormData({
-          ...formData,
-          [`${type}_url`]: url
-        });
+        setFormData({...formData, additional_images: [...formData.additional_images, url]});
       }
     }
+    e.target.value = '';
   };
 
   const removeAdditionalImage = (index) => {
@@ -392,12 +382,28 @@ const Products = ({ token }) => {
                     type="file"
                     accept="image/*"
                     multiple
-                    onChange={(e) => handleMultipleFileChange(e, 'image')}
+                    onChange={async (e) => {
+                      const files = Array.from(e.target.files);
+                      if (files.length === 0) return;
+                      
+                      setUploading(true);
+                      for (const file of files) {
+                        const url = await uploadFile(file, 'image');
+                        if (url) {
+                          if (!formData.image_url) {
+                            setFormData(prev => ({...prev, image_url: url}));
+                          } else {
+                            setFormData(prev => ({...prev, additional_images: [...prev.additional_images, url]}));
+                          }
+                        }
+                      }
+                      setUploading(false);
+                      e.target.value = '';
+                    }}
                     disabled={uploading}
-                    key={formData.image_url}
                   />
                   {uploading && <small>Upload en cours...</small>}
-                  {!uploading && <small>Vous pouvez sélectionner plusieurs images à la fois</small>}
+                  {!uploading && <small>Vous pouvez sélectionner plusieurs images</small>}
                   
                   {/* Affichage de l'image principale */}
                   {formData.image_url && (
@@ -462,10 +468,11 @@ const Products = ({ token }) => {
                   <input
                     type="file"
                     accept="image/*"
-                    multiple
-                    onChange={(e) => handleMultipleFileChange(e, 'additional')}
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) handleFileChange(e, 'additional');
+                    }}
                     disabled={uploading}
-                    key={formData.additional_images.length}
                   />
                   {uploading && <small>Upload en cours...</small>}
                   {!uploading && <small>Ajoutez d'autres vues du produit</small>}
