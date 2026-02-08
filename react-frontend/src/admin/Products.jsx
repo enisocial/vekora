@@ -387,18 +387,23 @@ const Products = ({ token }) => {
                       if (files.length === 0) return;
                       
                       setUploading(true);
-                      for (const file of files) {
-                        const url = await uploadFile(file, 'image');
-                        if (url) {
-                          if (!formData.image_url) {
-                            setFormData(prev => ({...prev, image_url: url}));
-                          } else {
-                            setFormData(prev => ({...prev, additional_images: [...prev.additional_images, url]}));
+                      try {
+                        for (const file of files) {
+                          const url = await uploadFile(file, 'image');
+                          if (url) {
+                            setFormData(prev => {
+                              if (!prev.image_url) {
+                                return {...prev, image_url: url};
+                              } else {
+                                return {...prev, additional_images: [...prev.additional_images, url]};
+                              }
+                            });
                           }
                         }
+                      } finally {
+                        setUploading(false);
+                        e.target.value = '';
                       }
-                      setUploading(false);
-                      e.target.value = '';
                     }}
                     disabled={uploading}
                   />
