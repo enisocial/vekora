@@ -46,8 +46,9 @@ const Products = ({ token }) => {
 
   const uploadFile = async (file, type = 'image') => {
     try {
+      setUploading(true);
       const fileExt = file.name.split('.').pop();
-      const fileName = `${type}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
+      const fileName = `${type}_${Date.now()}.${fileExt}`;
       
       const { data, error } = await supabase.storage
         .from('products-media')
@@ -64,60 +65,43 @@ const Products = ({ token }) => {
       console.error('Erreur upload:', error);
       alert('Erreur lors de l\'upload: ' + error.message);
       return null;
+    } finally {
+      setUploading(false);
     }
-  };
-
-  const handleMultipleFileChange = async (e, type) => {
-    const files = Array.from(e.target.files);
-    if (files.length === 0) return;
-
-    setUploading(true);
-    const uploadedUrls = [];
-
-    for (const file of files) {
-      const url = await uploadFile(file, type);
-      if (url) uploadedUrls.push(url);
-    }
-
-    if (uploadedUrls.length > 0) {
-      if (type === 'image' && !formData.image_url) {
-        setFormData({
-          ...formData,
-          image_url: uploadedUrls[0],
-          additional_images: [...formData.additional_images, ...uploadedUrls.slice(1)]
-        });
-      } else {
-        setFormData({
-          ...formData,
-          additional_images: [...formData.additional_images, ...uploadedUrls]
-        });
-      }
-    }
-    setUploading(false);
   };
 
   const handleFileChange = async (e, type) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    setUploading(true);
     const url = await uploadFile(file, type);
-    setUploading(false);
-    
     if (url) {
       if (type === 'image') {
+        // Si pas d'image principale, la définir comme principale
         if (!formData.image_url) {
-          setFormData({...formData, image_url: url});
+          setFormData({
+            ...formData,
+            image_url: url
+          });
         } else {
-          setFormData({...formData, additional_images: [...formData.additional_images, url]});
+          // Sinon l'ajouter aux images supplémentaires
+          setFormData({
+            ...formData,
+            additional_images: [...formData.additional_images, url]
+          });
         }
-      } else if (type === 'video') {
-        setFormData({...formData, video_url: url});
       } else if (type === 'additional') {
-        setFormData({...formData, additional_images: [...formData.additional_images, url]});
+        setFormData({
+          ...formData,
+          additional_images: [...formData.additional_images, url]
+        });
+      } else {
+        setFormData({
+          ...formData,
+          [`${type}_url`]: url
+        });
       }
     }
-    e.target.value = '';
   };
 
   const removeAdditionalImage = (index) => {
@@ -382,33 +366,13 @@ const Products = ({ token }) => {
                     type="file"
                     accept="image/*"
                     multiple
-                    onChange={async (e) => {
+                    onChange={(e) => {
                       const files = Array.from(e.target.files);
-                      if (files.length === 0) return;
-                      
-                      setUploading(true);
-                      try {
-                        for (const file of files) {
-                          const url = await uploadFile(file, 'image');
-                          if (url) {
-                            setFormData(prev => {
-                              if (!prev.image_url) {
-                                return {...prev, image_url: url};
-                              } else {
-                                return {...prev, additional_images: [...prev.additional_images, url]};
-                              }
-                            });
-                          }
-                        }
-                      } finally {
-                        setUploading(false);
-                        e.target.value = '';
-                      }
+                      files.forEach(file => handleFileChange({target: {files: [file]}}, 'image'));
                     }}
                     disabled={uploading}
                   />
-                  {uploading && <small>Upload en cours...</small>}
-                  {!uploading && <small>Vous pouvez sélectionner plusieurs images</small>}
+                  <small>Vous pouvez sélectionner plusieurs images à la fois</small>
                   
                   {/* Affichage de l'image principale */}
                   {formData.image_url && (
@@ -473,14 +437,14 @@ const Products = ({ token }) => {
                   <input
                     type="file"
                     accept="image/*"
+                    multiple
                     onChange={(e) => {
-                      const file = e.target.files[0];
-                      if (file) handleFileChange(e, 'additional');
+                      const files = Array.from(e.target.files);
+                      files.forEach(file => handleFileChange({target: {files: [file]}}, 'additional'));
                     }}
                     disabled={uploading}
                   />
-                  {uploading && <small>Upload en cours...</small>}
-                  {!uploading && <small>Ajoutez d'autres vues du produit</small>}
+                  <small>Ajoutez d'autres vues du produit</small>
                 </div>
               </div>
 
