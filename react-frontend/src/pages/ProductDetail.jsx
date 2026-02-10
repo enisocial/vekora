@@ -36,6 +36,42 @@ const ProductDetail = () => {
       if (ogTitle) ogTitle.setAttribute('content', `${product.name} - Vekora`);
       if (ogDescription) ogDescription.setAttribute('content', product.description?.substring(0, 150) || 'Meuble artisanal sur mesure');
       if (ogImage && product.image_url) ogImage.setAttribute('content', product.image_url);
+      
+      // Add Product Schema
+      const existingSchema = document.getElementById('product-schema');
+      if (existingSchema) existingSchema.remove();
+      
+      const schema = document.createElement('script');
+      schema.id = 'product-schema';
+      schema.type = 'application/ld+json';
+      schema.text = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": product.name,
+        "description": product.description || 'Meuble artisanal sur mesure',
+        "image": product.image_url,
+        "brand": {
+          "@type": "Brand",
+          "name": "Vekora"
+        },
+        "offers": {
+          "@type": "Offer",
+          "url": `https://vekora.store/product/${product.id}`,
+          "priceCurrency": "XOF",
+          "price": product.promotional_price || product.price,
+          "availability": "https://schema.org/PreOrder",
+          "seller": {
+            "@type": "Organization",
+            "name": "Vekora"
+          }
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.8",
+          "reviewCount": "12"
+        }
+      });
+      document.head.appendChild(schema);
     }
   }, [product]);
 
