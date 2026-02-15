@@ -155,6 +155,31 @@
   font-size: var(--text-lg);
 }
 
+.cart-item-subtotal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  background: var(--secondary);
+  border-radius: var(--radius-md);
+}
+
+.subtotal-label {
+  font-size: var(--text-xs);
+  color: var(--grey-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.subtotal-value {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  color: var(--primary);
+  font-weight: 700;
+}
+
 .cart-item-remove {
   background: none;
   border: none;

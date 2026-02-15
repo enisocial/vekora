@@ -77,18 +77,20 @@ const Cart = () => {
 
   if (orderSuccess) {
     return (
-      <div className="container">
-        <div className="order-success">
-          <i className="fas fa-check-circle"></i>
-          <h2>Commande confirmée !</h2>
-          <p>Votre commande a été créée avec succès.</p>
-          <p>Nous vous contacterons bientôt pour la livraison.</p>
-          <button 
-            onClick={() => setOrderSuccess(false)} 
-            className="btn btn-primary"
-          >
-            Continuer les achats
-          </button>
+      <div className="cart-page">
+        <div className="cart-container">
+          <div className="order-success">
+            <i className="fas fa-check-circle"></i>
+            <h2>Commande confirmée !</h2>
+            <p>Votre commande a été créée avec succès.</p>
+            <p>Nous vous contacterons bientôt pour la livraison.</p>
+            <button 
+              onClick={() => setOrderSuccess(false)} 
+              className="btn btn-primary"
+            >
+              Continuer les achats
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -96,84 +98,100 @@ const Cart = () => {
 
   if (items.length === 0) {
     return (
-      <div className="container">
-        <div className="empty-cart">
-          <i className="fas fa-shopping-cart"></i>
-          <h2>Votre panier est vide</h2>
-          <p>Découvrez nos produits et ajoutez-les à votre panier</p>
-          <a href="/" className="btn btn-primary">
-            Voir les produits
-          </a>
+      <div className="cart-page">
+        <div className="cart-container">
+          <div className="cart-empty">
+            <i className="fas fa-shopping-cart"></i>
+            <h2>Votre panier est vide</h2>
+            <p>Découvrez nos meubles et ajoutez-les à votre panier</p>
+            <a href="/" className="btn btn-primary">
+              Voir les produits
+            </a>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="container">
-      <div className="cart-page">
-        <h1>Votre Panier</h1>
+    <div className="cart-page">
+      <div className="cart-container">
+        <div className="cart-header">
+          <h1>Votre Panier</h1>
+          <p>{items.length} article{items.length > 1 ? 's' : ''} dans votre panier</p>
+        </div>
         
         <div className="cart-content">
           <div className="cart-items">
             {items.map(item => (
               <div key={item.id} className="cart-item">
-                <div className="item-image">
+                <div className="cart-item-image">
                   <img src={item.image_url || '/placeholder.jpg'} alt={item.name} />
                 </div>
-                <div className="item-info">
-                  <h3>{item.name}</h3>
-                  <div className="item-price">
+                <div className="cart-item-details">
+                  <div className="cart-item-category">{item.category_name || 'Meuble'}</div>
+                  <h3 className="cart-item-title">{item.name}</h3>
+                  <div className="cart-item-price">
                     {item.promotional_price && item.promotional_price < item.price ? (
-                      <div className="price-container">
-                        <span className="original-price">{formatPrice(item.price)}</span>
-                        <span className="promotional-price">{formatPrice(item.promotional_price)}</span>
-                      </div>
+                      <>
+                        <span className="price-original">{formatPrice(item.price)}</span>
+                        <span className="price-current">{formatPrice(item.promotional_price)}</span>
+                      </>
                     ) : (
-                      formatPrice(item.price)
+                      <span className="price-current">{formatPrice(item.price)}</span>
                     )}
                   </div>
                 </div>
-                <div className="item-controls">
-                  <div className="quantity-controls">
+                <div className="cart-item-actions">
+                  <div className="cart-item-quantity">
                     <button 
                       onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                      className="qty-btn"
+                      className="quantity-btn"
                     >
                       -
                     </button>
-                    <span className="quantity">{item.quantity}</span>
+                    <span className="quantity-value">{item.quantity}</span>
                     <button 
                       onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                      className="qty-btn"
+                      className="quantity-btn"
                     >
                       +
                     </button>
                   </div>
+                  <div className="cart-item-subtotal">
+                    <div className="subtotal-label">Total</div>
+                    <div className="subtotal-value">
+                      {item.promotional_price && item.promotional_price < item.price ? 
+                        formatPrice(item.promotional_price * item.quantity) : 
+                        formatPrice(item.price * item.quantity)
+                      }
+                    </div>
+                  </div>
                   <button 
                     onClick={() => removeFromCart(item.id)}
-                    className="btn btn-danger btn-sm"
+                    className="cart-item-remove"
+                    title="Supprimer"
                   >
                     <i className="fas fa-trash"></i>
                   </button>
-                </div>
-                <div className="item-total">
-                  {item.promotional_price && item.promotional_price < item.price ? 
-                    formatPrice(item.promotional_price * item.quantity) : 
-                    formatPrice(item.price * item.quantity)
-                  }
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="order-form">
-            <div className="cart-summary">
-              <h3>Total: {formatPrice(getTotal())}</h3>
+          <div className="cart-summary">
+            <h2>Résumé</h2>
+            <div className="cart-summary-row">
+              <span>Sous-total</span>
+              <span className="amount">{formatPrice(getTotal())}</span>
+            </div>
+            <div className="cart-summary-row total">
+              <span>Total</span>
+              <span className="amount">{formatPrice(getTotal())}</span>
             </div>
 
-            <form onSubmit={handleSubmitOrder} className="checkout-form">
-              <h3>Informations de livraison</h3>
+            <form onSubmit={handleSubmitOrder} className="order-form">
+              <h3><i className="fas fa-truck"></i> Informations de livraison</h3>
               
               <div className="form-group">
                 <label htmlFor="customer_name">Nom complet *</label>
@@ -211,20 +229,20 @@ const Cart = () => {
                 ></textarea>
               </div>
 
-              <div className="form-actions">
+              <div className="cart-summary-actions">
+                <button 
+                  type="submit" 
+                  className="btn btn-primary"
+                  disabled={loading}
+                >
+                  {loading ? 'Commande en cours...' : 'Passer commande'}
+                </button>
                 <button 
                   type="button" 
                   onClick={clearCart}
                   className="btn btn-secondary"
                 >
                   Vider le panier
-                </button>
-                <button 
-                  type="submit" 
-                  className="btn btn-primary btn-large"
-                  disabled={loading}
-                >
-                  {loading ? 'Commande en cours...' : 'Passer commande'}
                 </button>
               </div>
             </form>
