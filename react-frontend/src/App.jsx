@@ -13,6 +13,14 @@ import Categories from './admin/Categories';
 import HeroVideo from './admin/HeroVideo';
 import WhatsApp from './admin/WhatsApp';
 import Orders from './admin/Orders';
+import './premium-design.css';
+import './components/Navbar.css';
+import './components/ProductCard.css';
+import './components/CategoryCard.css';
+import './components/WhatsAppFloat.css';
+import './pages/Catalog.css';
+import './pages/ProductDetail.css';
+import './pages/Cart.css';
 import './new-design.css';
 
 function App() {
