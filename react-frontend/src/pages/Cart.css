@@ -398,28 +398,57 @@
   }
 
   .cart-item {
-    grid-template-columns: 80px 1fr;
+    grid-template-columns: 1fr;
     gap: var(--space-md);
+    padding: var(--space-md);
   }
 
   .cart-item-image {
-    width: 80px;
-    height: 80px;
+    width: 100%;
+    height: 200px;
+    margin: 0 auto;
+  }
+
+  .cart-item-details {
+    text-align: center;
   }
 
   .cart-item-title {
-    font-size: var(--text-base);
-  }
-
-  .cart-item-price {
     font-size: var(--text-lg);
   }
 
+  .cart-item-price {
+    font-size: var(--text-xl);
+    justify-content: center;
+  }
+
   .cart-item-actions {
-    grid-column: 1 / -1;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: var(--space-md);
+    align-items: stretch;
+  }
+
+  .cart-item-quantity {
+    justify-content: center;
+  }
+
+  .cart-item-subtotal {
     align-items: center;
+    padding: var(--space-lg);
+  }
+
+  .subtotal-label {
+    font-size: var(--text-sm);
+  }
+
+  .subtotal-value {
+    font-size: var(--text-3xl);
+  }
+
+  .cart-item-remove {
+    align-self: center;
+    padding: var(--space-md);
+    font-size: var(--text-xl);
   }
 
   .cart-summary {
@@ -436,5 +465,9 @@
 
   .order-form {
     padding: var(--space-lg);
+  }
+
+  .order-form h3 {
+    font-size: var(--text-lg);
   }
 }

@@ -47,9 +47,21 @@ const cartReducer = (state, action) => {
 export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, { items: [] });
 
+  // Générer un ID unique par navigateur/appareil
+  const getClientId = () => {
+    let clientId = localStorage.getItem('vekora_client_id');
+    if (!clientId) {
+      clientId = 'client_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('vekora_client_id', clientId);
+    }
+    return clientId;
+  };
+
   // Charger le panier depuis localStorage au démarrage
   useEffect(() => {
-    const savedCart = localStorage.getItem('delivershop_cart');
+    const clientId = getClientId();
+    const cartKey = `vekora_cart_${clientId}`;
+    const savedCart = localStorage.getItem(cartKey);
     if (savedCart) {
       dispatch({ type: 'LOAD_CART', payload: JSON.parse(savedCart) });
     }
@@ -57,7 +69,9 @@ export const CartProvider = ({ children }) => {
 
   // Sauvegarder le panier dans localStorage à chaque changement
   useEffect(() => {
-    localStorage.setItem('delivershop_cart', JSON.stringify(state.items));
+    const clientId = getClientId();
+    const cartKey = `vekora_cart_${clientId}`;
+    localStorage.setItem(cartKey, JSON.stringify(state.items));
   }, [state.items]);
 
   const addToCart = (product, quantity = 1) => {
